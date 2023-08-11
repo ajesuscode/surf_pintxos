@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Navbar from "./components/Navbar";
 
 export const metadata: Metadata = {
     title: "Surf Pintxos",
@@ -49,7 +50,8 @@ export default function RootLayout({
             <body
                 className={`${ouroboros.variable} ${millimetre.variable} bg-primary`}
             >
-                {children}
+                <Navbar />
+                <main className="h-full">{children}</main>
             </body>
         </html>
     );
