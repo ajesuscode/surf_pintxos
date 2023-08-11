@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 
 export const metadata: Metadata = {
     title: "Surf Pintxos",
-    description: "Surf forecast for all Basque country spots",
+    description: "Open source Surf forecast for all Basque country spots",
 };
 
 const ouroboros = localFont({

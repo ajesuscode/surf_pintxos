@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import pintxo_lg from "./pintxo_lg_logo.png";
+import { SurferProfileIcon } from "@/app/components/icons/icons";
 
 export default function Navbar() {
     return (
@@ -16,7 +17,9 @@ export default function Navbar() {
                 />
             </Link>
             <Link href="/login">
-                <div>Login</div>
+                <div>
+                    <SurferProfileIcon size={30} color="text-light" />
+                </div>
             </Link>
         </div>
     );
