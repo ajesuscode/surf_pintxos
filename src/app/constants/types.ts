@@ -4,7 +4,7 @@ export type IconProps = {
 };
 
 export type SurfSpot = {
-    id?: string;
+    id: string;
     Name: string;
     "About Spot": string;
     Board: string;
