@@ -5,20 +5,20 @@ export type IconProps = {
 
 export type SurfSpot = {
     id: string;
-    Name: string;
-    "About Spot": string;
-    Board: string;
-    Seabed: string;
-    Swell: string;
-    "Best Surf": string;
-    WINDY: string;
-    "Swell handle": string;
-    "Swell direction": string;
-    Wavetype: string;
-    Surfer: string;
-    Latitude: string;
-    Longitude: string;
-    "Spot rating": string;
+    name: string;
+    about: string;
+    board: string;
+    seabed: string;
+    swell: string;
+    best_surf: string;
+    windy: string;
+    swell_handle: string;
+    swell_direction: string;
+    wavetype: string;
+    surfer: string;
+    latitude: string;
+    longitude: string;
+    spot_rating: string;
     image_03: string;
     image_04: string;
 };

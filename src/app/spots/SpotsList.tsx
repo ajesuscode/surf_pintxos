@@ -31,7 +31,7 @@ export default async function SpotsList() {
                         <Link key={spot.id} href={`spots/${spot.id}`}>
                             <div className="flex flex-col justify-start p-4 bg-dark rounded-md">
                                 <span className="text-light font-body font-regular text-lg">
-                                    {spot.Name}
+                                    {spot.name}
                                 </span>
                             </div>
                         </Link>

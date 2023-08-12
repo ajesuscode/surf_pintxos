@@ -7,8 +7,8 @@ async function getSpotDetails(id: string) {
     try {
         const record = await base("all_spots").find(id);
         const spot = record.fields as SurfSpot;
-        const lat = spot.Latitude;
-        const long = spot.Longitude;
+        const lat = spot.latitude;
+        const long = spot.longitude;
         console.log(spot);
         const res = await fetch(
             `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${long}8&hourly=wave_height,wave_direction,wave_period,swell_wave_height,swell_wave_direction,swell_wave_period`
@@ -37,7 +37,7 @@ export default async function SpotDetails({
                         SpotDetails
                     </div>
                     <div className="font-body text-light text-2xl">
-                        {spot.Name}
+                        {spot.name}
                     </div>
                 </main>
             )}
