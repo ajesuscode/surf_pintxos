@@ -1,37 +1,24 @@
 import React from "react";
 import Link from "next/link";
-import { base } from "@/app/lib/airtable/index";
-import type { SurfSpot } from "../constants/types";
 import NotFound from "../not-found";
-
-async function getAllSpots() {
-    try {
-        const records = await base("all_spots")
-            .select({
-                view: "Grid view",
-            })
-            .firstPage();
-        const res = records.map((record) => ({
-            id: record.id,
-            ...record.fields,
-        })) as SurfSpot[];
-        return res;
-    } catch (error) {
-        return <NotFound />;
-    }
-}
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import type { Database } from "../lib/database.types";
 
 export default async function SpotsList() {
-    const spots = (await getAllSpots()) as SurfSpot[];
+    const supabase = createServerComponentClient<Database>({ cookies });
+
+    const { data: spots } = await supabase.from("surfspots").select();
+
     return (
         <>
             <div className="grid grid-cols-6 gap-4">
                 {spots &&
-                    spots.map((spot) => (
-                        <Link key={spot.id} href={`spots/${spot.id}`}>
+                    spots?.map((spot) => (
+                        <Link key={spot.spot_id} href={`spots/${spot.spot_id}`}>
                             <div className="flex flex-col justify-start p-4 bg-dark rounded-md">
                                 <span className="text-light font-body font-regular text-lg">
-                                    {spot.name}
+                                    {spot.name?.slice(0, 21) ?? ""}
                                 </span>
                             </div>
                         </Link>
