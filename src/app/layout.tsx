@@ -1,11 +1,20 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Image from "next/image";
+import Link from "next/link";
+import pintxo_lg from "@/app/components/pintxo_lg_logo.png";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import { Database } from "./lib/database.types";
 import Navbar from "./components/Navbar";
+import { redirect } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
     title: "Surf Pintxos",
-    description: "Open source Surf forecast for all Basque country spots",
+    description: "Community Surf forecast for all Basque country spots",
 };
 
 const ouroboros = localFont({
@@ -40,17 +49,24 @@ const millimetre = localFont({
     variable: "--font-millimetre",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const supabase = createServerComponentClient<Database>({ cookies });
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
     return (
         <html lang="en">
             <body
                 className={`${ouroboros.variable} ${millimetre.variable} bg-primary`}
             >
-                <Navbar />
+                <div>
+                    <Navbar user={user} />
+                </div>
                 <main className="h-full">{children}</main>
             </body>
         </html>

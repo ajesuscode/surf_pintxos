@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import NotFound from "../not-found";
+import NotFound from "../../not-found";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import type { Database } from "../lib/database.types";
+import type { Database } from "../../lib/database.types";
 
 export default async function SpotsList() {
     const supabase = createServerComponentClient<Database>({ cookies });
@@ -12,7 +12,7 @@ export default async function SpotsList() {
 
     return (
         <>
-            <div className="grid grid-cols-6 gap-4">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 xl:grid-cols-6 md:grid-cols-2 ">
                 {spots &&
                     spots?.map((spot) => (
                         <Link key={spot.spot_id} href={`spots/${spot.spot_id}`}>

@@ -3,6 +3,8 @@ import NotFound from "@/app/not-found";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import type { Database } from "@/app/lib/database.types";
+import Link from "next/link";
+import { ArrowBackIcon } from "@/app/components/icons/icons";
 
 type SurfSpot = Database["public"]["Tables"]["surfspots"]["Row"];
 type FullSpot = (SurfSpot & { hourlySpotForecast: HourlySurfData }) | null;
@@ -43,9 +45,15 @@ export default async function SpotDetails({
         <>
             {spot && (
                 <main>
-                    <div className="text-dark font-bold font-body text-md mb-8">
-                        SpotDetails
+                    <div className="flex flex-row justify-start gap-4 items-center mb-8">
+                        <Link href="/spots">
+                            <ArrowBackIcon size={18} color="text-dark" />
+                        </Link>
+                        <div className="text-dark font-bold font-body text-md ">
+                            SpotDetails
+                        </div>
                     </div>
+
                     <div className="font-body text-light text-2xl">
                         {spot.name}
                     </div>
