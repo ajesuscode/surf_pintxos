@@ -13,17 +13,17 @@ export interface Database {
                 Row: {
                     created_at: string;
                     spot_id: string;
-                    user_id: number | null;
+                    user_id: string;
                 };
                 Insert: {
                     created_at?: string;
                     spot_id?: string;
-                    user_id?: number | null;
+                    user_id?: string;
                 };
                 Update: {
                     created_at?: string;
                     spot_id?: string;
-                    user_id?: number | null;
+                    user_id?: string;
                 };
                 Relationships: [];
             };

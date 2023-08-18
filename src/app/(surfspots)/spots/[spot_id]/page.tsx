@@ -4,7 +4,8 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import type { Database } from "@/app/lib/database.types";
 import Link from "next/link";
-import { ArrowBackIcon } from "@/app/components/icons/icons";
+import { AddFavoriteIcon, ArrowBackIcon } from "@/app/components/icons/icons";
+import AddToFavoriteBtn from "@/app/components/AddToFavoriteBtn";
 
 type SurfSpot = Database["public"]["Tables"]["surfspots"]["Row"];
 type FullSpot = (SurfSpot & { hourlySpotForecast: HourlySurfData }) | null;
@@ -32,6 +33,16 @@ async function getSpotDetails(id: string) {
     }
 }
 
+async function isSpotFavorite(id: string) {
+    const supabase = createServerComponentClient<Database>({ cookies });
+    const { data, error } = await supabase
+        .from("fav_spots")
+        .select("*")
+        .eq("spot_id", id)
+        .single();
+    return data;
+}
+
 export default async function SpotDetails({
     params,
 }: {
@@ -39,13 +50,15 @@ export default async function SpotDetails({
 }) {
     const id = params.spot_id;
     const spot = await getSpotDetails(id);
-    console.log("Full Spot", spot);
+    const favorite = await isSpotFavorite(id);
+    const isFavorite = !!favorite;
+    console.log("SPOT IS FAVORITE", isFavorite);
 
     return (
         <>
             {spot && (
                 <main>
-                    <div className="flex flex-row justify-start gap-4 items-center mb-8">
+                    <div className="flex flex-row justify-start gap-4 items-center mb-4">
                         <Link href="/spots">
                             <ArrowBackIcon size={18} color="text-dark" />
                         </Link>
@@ -53,9 +66,11 @@ export default async function SpotDetails({
                             SpotDetails
                         </div>
                     </div>
-
-                    <div className="font-body text-light text-2xl">
-                        {spot.name}
+                    <div className="flex flex-row justify-between items-center ">
+                        <div className="font-body text-light text-2xl">
+                            {spot.name}
+                        </div>
+                        <AddToFavoriteBtn spotId={id} isFavorite={isFavorite} />
                     </div>
                 </main>
             )}

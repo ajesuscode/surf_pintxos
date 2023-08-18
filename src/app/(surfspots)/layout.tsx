@@ -12,20 +12,19 @@ export default async function FavoriteSpotsLayout({
     const {
         data: { user },
     } = await supabase.auth.getUser();
-    console.log("USER DATA favorite LAYOUT", user);
 
     return (
         <main className="p-4 pt-20 xl:p-24">
-            <div className="flex flex-row justify-start gap-4">
+            <div className="flex flex-row justify-start gap-4 mb-4">
                 {user && (
                     <Link href="/favorite">
-                        <div className="font-body text-xl lg:text-3xl font-bold text-light/75 mb-8">
+                        <div className="font-body text-lg lg:text-xl font-bold text-light/75">
                             Favorite
                         </div>
                     </Link>
                 )}
                 <Link href="/spots">
-                    <div className="font-body text-xl lg:text-3xl font-bold text-light/75 mb-8">
+                    <div className="font-body text-lg lg:text-xl font-bold text-light/75">
                         All Pintxos Spots
                     </div>
                 </Link>
