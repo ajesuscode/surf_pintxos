@@ -16,7 +16,8 @@ export default async function layoutAuth({
     console.log("USER DATA LOGIN LAYOUT", user);
     if (user) {
         redirect("/favorite");
-    }
+    } 
+    
     return (
         <div className="pt-20">
             <div className="flex flex-row justify-start gap-4 px-4">

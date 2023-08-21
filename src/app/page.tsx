@@ -1,8 +1,19 @@
 import Link from "next/link";
 import Image from "next/image";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import { Database } from "./lib/database.types";
 
 import pintxos_lg from "./components/pintxo_lg_logo.png";
-export default function Home() {
+import { redirect } from "next/navigation";
+export default async function Home() {
+    const supabase = createServerComponentClient<Database>({ cookies });
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
+        redirect("/favorite");
+    }
     return (
         <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-2">
             <Image

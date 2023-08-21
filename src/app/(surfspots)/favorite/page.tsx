@@ -1,9 +1,12 @@
+import SpotDetails from "@/app/components/SpotDetails";
 import { Database } from "@/app/lib/database.types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import { fetchSpotSurfData } from "@/app/utils/surfUtils";
+import { FullSpot, SurfSpot, FavoriteSpot } from "@/app/constants/types";
 import Link from "next/link";
 
-async function getFavoriteSpots() {
+async function getFavoriteSpots(): Promise<SurfSpot[]> {
     try {
         const supabase = await createServerComponentClient<Database>({
             cookies,
@@ -19,36 +22,57 @@ async function getFavoriteSpots() {
             if (error) {
                 console.log(error.message);
             }
-            const spotIds = data?.map((item) => item.spot_id);
-            if (spotIds) {
+            const spotIds = data?.map((item) => item.spot_id) || [];
+            if (spotIds.length) {
                 const { data, error } = await supabase
                     .from("surfspots")
-                    .select("spot_id, name, lat, long")
+                    .select("*")
                     .in("spot_id", spotIds);
-                return data;
+                return data || [];
             }
         }
     } catch (err) {
         console.log(err);
     }
+    return [];
 }
 
 export default async function FavoriteSpots() {
     const favoriteSpots = await getFavoriteSpots();
-    console.log(favoriteSpots);
+    let favoriteSpotsData: FullSpot[] = [];
+
+    if (favoriteSpots.length) {
+        favoriteSpotsData = await Promise.all(
+            favoriteSpots.map(async (spot) => {
+                try {
+                    return await fetchSpotSurfData(spot);
+                } catch (error) {
+                    console.error(
+                        `Error fetching data for spot ${spot.name}:`,
+                        error
+                    );
+                    return null; // or return a default value or error object
+                }
+            })
+        );
+    }
 
     return (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 xl:grid-cols-6 md:grid-cols-2 ">
-            {favoriteSpots &&
-                favoriteSpots?.map((spot) => (
-                    <Link key={spot.spot_id} href={`spots/${spot.spot_id}`}>
-                        <div className="flex flex-col justify-start p-4 bg-dark rounded-md">
-                            <span className="text-light font-body font-regular text-lg">
-                                {spot.name?.slice(0, 21) ?? ""}
-                            </span>
-                        </div>
-                    </Link>
-                ))}
+            {favoriteSpotsData &&
+                favoriteSpotsData.map((spot) => {
+                    if (spot) {
+                        return (
+                            <Link
+                                key={spot.spot_id}
+                                href={`spots/${spot.spot_id}`}
+                            >
+                                <SpotDetails spot={spot} />
+                            </Link>
+                        );
+                    }
+                    return null; // or render an error component
+                })}
         </div>
     );
 }

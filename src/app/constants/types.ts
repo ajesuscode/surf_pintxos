@@ -1,3 +1,18 @@
+import { Database } from "../lib/database.types";
+
+export type SurfSpot = Database["public"]["Tables"]["surfspots"]["Row"];
+export type FavSurfSpot = Database["public"]["Tables"]["fav_spots"]["Row"];
+export type FullSpot =
+    | (SurfSpot & { hourlySpotForecast: HourlySurfData })
+    | null;
+
+export type FavoriteSpot = {
+    spot_id: string;
+    name: string | null;
+    lat: number | null;
+    long: number | null;
+};
+
 export type IconProps = {
     size?: number;
     color?: string;
