@@ -6,27 +6,35 @@ import {
     HourlySurfData,
     FavoriteSpot,
     TideType,
+    HourlyWeatherData,
+    ForecastDataResponse,
 } from "../constants/types";
 import { Database } from "../lib/database.types";
 
 export async function fetchSpotSurfData(spot: SurfSpot) {
-    const response = await fetch(
-        `https://marine-api.open-meteo.com/v1/marine?latitude=${spot.lat}&longitude=${spot.long}&hourly=wave_height,wave_direction,wave_period,swell_wave_height,swell_wave_direction,swell_wave_period`
-    );
+    const marineApiUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${spot.lat}&longitude=${spot.long}&hourly=wave_height,wave_direction,wave_period,swell_wave_height,swell_wave_direction,swell_wave_period`;
+    const forecastApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${spot.lat}&longitude=${spot.long}&hourly=temperature_2m,precipitation,visibility,windspeed_10m,winddirection_10m,temperature_80m,uv_index&models=best_match`;
 
-    if (!response.ok) {
+    const [marineResponse, forecastResponse] = await Promise.all([
+        fetch(marineApiUrl),
+        fetch(forecastApiUrl),
+    ]);
+
+    if (!marineResponse.ok) {
         throw new Error(`Failed to fetch data for spot ${spot.name}`);
     }
 
-    const data: HourlySurfData = await response.json();
-    // const tides = await getTidesData();
-    // console.log(tides);
+    const hourlySurfData: HourlySurfData = await marineResponse.json();
+    const forecastData: ForecastDataResponse = await forecastResponse.json();
+    const hourlyWeatherData: HourlyWeatherData = forecastData.hourly;
 
     return {
         ...spot,
-        hourlySpotForecast: data,
+        hourlySpotForecast: hourlySurfData,
+        hourlyWeatherData: hourlyWeatherData,
     };
 }
+
 export function getCurrentWaveHeightForSpot(spot: FullSpot): string | null {
     if (!spot) return null; // Check if spot is null
 

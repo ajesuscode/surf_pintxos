@@ -6,12 +6,30 @@ import {
     getTidesData,
     getCurrentTide,
 } from "../utils/surfUtils";
+import getSurfConditions from "../utils/surfConditions";
 
 export default async function SpotDetails({ spot }: { spot: FullSpot }) {
+    console.log("spot", spot);
+    // getting curent tide to display for every spot
     let curTide = "";
+    let currentCondition: string[] = [];
+    const currentTime = new Date().toISOString().slice(0, 13) + ":00";
+    const timeIndex =
+        spot?.hourlySpotForecast?.hourly.time.indexOf(currentTime);
     try {
         const tidesData = await getTidesData();
         curTide = await getCurrentTide(tidesData);
+        const surfConditions = getSurfConditions(spot, tidesData);
+        if (
+            surfConditions &&
+            typeof timeIndex !== "undefined" &&
+            timeIndex !== -1
+        ) {
+            currentCondition = surfConditions
+                .slice(timeIndex, timeIndex + 3)
+                .map((conditionObj) => conditionObj.condition);
+            console.log(currentCondition);
+        }
     } catch (err) {
         console.log((err as Error).message);
     }
@@ -23,7 +41,11 @@ export default async function SpotDetails({ spot }: { spot: FullSpot }) {
                     <span className="text-light font-body font-regular text-lg">
                         {spot?.name?.slice(0, 21) ?? ""}
                     </span>
-                    <span className="bg-emerald-400 w-48 h-4 rounded-sm"></span>
+                    <div className="bg-emerald-400 w-48 h-4 rounded-sm flex flex-row items-center ">
+                        <span className="text-dark font-body font-light">
+                            {currentCondition[0]}
+                        </span>
+                    </div>
                 </div>
 
                 <div className="flex flex-col justify-between gap-0 ">
@@ -32,9 +54,6 @@ export default async function SpotDetails({ spot }: { spot: FullSpot }) {
                     </span>
                     <span className="text-light font-body font-light text-lg">
                         {getCurrentPeriodForSpot(spot) || null} {"sec"}
-                    </span>
-                    <span className="text-light font-body font-light  text-base">
-                        {curTide}
                     </span>
                 </div>
             </div>
