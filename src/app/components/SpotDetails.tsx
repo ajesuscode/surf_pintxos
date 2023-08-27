@@ -1,12 +1,21 @@
 import React from "react";
-import { FullSpot } from "../constants/types";
+import { FullSpot, TideType } from "../constants/types";
 import {
     getCurrentWaveHeightForSpot,
     getCurrentPeriodForSpot,
+    getTidesData,
+    getCurrentTide,
 } from "../utils/surfUtils";
 
-export default function SpotDetails({ spot }: { spot: FullSpot }) {
-    console.log();
+export default async function SpotDetails({ spot }: { spot: FullSpot }) {
+    let curTide = "";
+    try {
+        const tidesData = await getTidesData();
+        curTide = await getCurrentTide(tidesData);
+    } catch (err) {
+        console.log((err as Error).message);
+    }
+
     return (
         <div className="flex flex-col justify-start p-4 bg-dark rounded-md shadow-md">
             <div className="flex flex-row justify-between gap-4">
@@ -23,6 +32,9 @@ export default function SpotDetails({ spot }: { spot: FullSpot }) {
                     </span>
                     <span className="text-light font-body font-light text-lg">
                         {getCurrentPeriodForSpot(spot) || null} {"sec"}
+                    </span>
+                    <span className="text-light font-body font-light  text-base">
+                        {curTide}
                     </span>
                 </div>
             </div>

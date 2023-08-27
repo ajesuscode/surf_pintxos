@@ -12,18 +12,21 @@ export interface Database {
             fav_spots: {
                 Row: {
                     created_at: string;
+                    favorite_id: string;
                     spot_id: string;
-                    user_id: string;
+                    user_id: string | null;
                 };
                 Insert: {
                     created_at?: string;
-                    spot_id?: string;
-                    user_id?: string;
+                    favorite_id: string;
+                    spot_id: string;
+                    user_id?: string | null;
                 };
                 Update: {
                     created_at?: string;
+                    favorite_id?: string;
                     spot_id?: string;
-                    user_id?: string;
+                    user_id?: string | null;
                 };
                 Relationships: [];
             };
@@ -90,6 +93,27 @@ export interface Database {
                     water_quality?: string | null;
                     wavetype?: string | null;
                     windy?: string | null;
+                };
+                Relationships: [];
+            };
+            tides: {
+                Row: {
+                    height: number;
+                    id: number;
+                    time: string;
+                    type: string;
+                };
+                Insert: {
+                    height: number;
+                    id?: number;
+                    time: string;
+                    type: string;
+                };
+                Update: {
+                    height?: number;
+                    id?: number;
+                    time?: string;
+                    type?: string;
                 };
                 Relationships: [];
             };

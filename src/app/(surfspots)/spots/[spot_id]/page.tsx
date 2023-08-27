@@ -62,15 +62,17 @@ export default async function SpotDetails({
                         <Link href="/spots">
                             <ArrowBackIcon size={18} color="text-dark" />
                         </Link>
-                        <div className="text-dark font-bold font-body text-md ">
-                            SpotDetails
-                        </div>
                     </div>
-                    <div className="flex flex-row justify-between items-center ">
-                        <div className="font-body text-light text-2xl">
-                            {spot.name}
+                    <div className="flex flex-col justify-center px-4 gap-2 bg-dark/25 p-2 rounded-sm">
+                        <div className="flex flex-row justify-between items-center ">
+                            <div className="font-body text-light text-2xl">
+                                {spot.name}
+                            </div>
+                            <AddToFavoriteBtn
+                                spotId={id}
+                                isFavorite={isFavorite}
+                            />
                         </div>
-                        <AddToFavoriteBtn spotId={id} isFavorite={isFavorite} />
                     </div>
                 </main>
             )}

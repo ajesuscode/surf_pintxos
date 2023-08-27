@@ -2,6 +2,7 @@ import { Database } from "../lib/database.types";
 
 export type SurfSpot = Database["public"]["Tables"]["surfspots"]["Row"];
 export type FavSurfSpot = Database["public"]["Tables"]["fav_spots"]["Row"];
+export type TideType = Database["public"]["Tables"]["tides"]["Row"];
 export type FullSpot =
     | (SurfSpot & { hourlySpotForecast: HourlySurfData })
     | null;

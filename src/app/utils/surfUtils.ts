@@ -1,9 +1,13 @@
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import {
     FullSpot,
     SurfSpot,
     HourlySurfData,
     FavoriteSpot,
+    TideType,
 } from "../constants/types";
+import { Database } from "../lib/database.types";
 
 export async function fetchSpotSurfData(spot: SurfSpot) {
     const response = await fetch(
@@ -15,6 +19,9 @@ export async function fetchSpotSurfData(spot: SurfSpot) {
     }
 
     const data: HourlySurfData = await response.json();
+    // const tides = await getTidesData();
+    // console.log(tides);
+
     return {
         ...spot,
         hourlySpotForecast: data,
@@ -48,4 +55,55 @@ export function getCurrentPeriodForSpot(spot: FullSpot): string | null {
     } else {
         return null;
     }
+}
+
+export async function getTidesData(): Promise<TideType[]> {
+    const supabase = createServerComponentClient<Database>({ cookies });
+    const { data: tides, error } = await supabase.from("tides").select("*");
+    if (!tides) {
+        throw new Error(error.message);
+    } else {
+        return tides as TideType[];
+    }
+}
+
+export function getCurrentTide(tides: TideType[]): string {
+    // Sort the tides based on time
+    const sortedTides = [...tides].sort(
+        (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
+    );
+
+    const now = new Date().getTime();
+
+    // Find the most recent tide event before the current time
+    let mostRecentTide: TideType | null = null;
+    let nextTide: TideType | null = null;
+    for (let i = sortedTides.length - 1; i >= 0; i--) {
+        if (new Date(sortedTides[i].time).getTime() <= now) {
+            mostRecentTide = sortedTides[i];
+            nextTide = sortedTides[i + 1] || null;
+            break;
+        }
+    }
+
+    // If there's no tide event before the current time or it's the last event in the array
+    if (!mostRecentTide || !nextTide) {
+        return "Cannot determine tide status";
+    }
+
+    const twoHoursInMillis = 2 * 60 * 60 * 1000;
+    const threeHoursInMillis = 3 * 60 * 60 * 1000;
+
+    const timeSinceLastTide = now - new Date(mostRecentTide.time).getTime();
+    const timeUntilNextTide = new Date(nextTide.time).getTime() - now;
+
+    if (
+        timeSinceLastTide <= twoHoursInMillis ||
+        timeUntilNextTide <= threeHoursInMillis
+    ) {
+        return "midtide";
+    }
+
+    // Check the tide status based on the most recent tide event
+    return mostRecentTide.type === "low" ? "rising" : "falling";
 }
