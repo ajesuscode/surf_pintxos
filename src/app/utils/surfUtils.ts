@@ -1,5 +1,8 @@
+//external libs
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import { DateTime } from "luxon";
+//types
 import {
     FullSpot,
     SurfSpot,
@@ -41,7 +44,11 @@ export function getCurrentWaveHeightForSpot(
 ): string | null {
     if (!spot) return null; // Check if spot is null
 
-    const currentTime = new Date().toISOString().slice(0, 13) + ":00";
+    const currentTime = DateTime.now()
+        .setZone("Europe/Paris")
+        .startOf("hour")
+        .toUTC()
+        .toFormat("yyyy-MM-dd'T'HH:mm");
     const timeIndex = spot.hourlyspotforecast?.hourly.time.indexOf(currentTime);
 
     if (timeIndex !== undefined && timeIndex !== -1) {
@@ -56,7 +63,11 @@ export function getCurrentWaveHeightForSpot(
 export function getCurrentPeriodForSpot(spot: PintxoConditions): string | null {
     if (!spot) return null; // Check if spot is null
 
-    const currentTime = new Date().toISOString().slice(0, 13) + ":00";
+    const currentTime = DateTime.now()
+        .setZone("Europe/Paris")
+        .startOf("hour")
+        .toUTC()
+        .toFormat("yyyy-MM-dd'T'HH:mm");
     const timeIndex = spot.hourlyspotforecast?.hourly.time.indexOf(currentTime);
 
     if (timeIndex !== undefined && timeIndex !== -1) {
