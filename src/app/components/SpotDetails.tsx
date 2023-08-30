@@ -1,34 +1,38 @@
 import React from "react";
-import { FullSpot, TideType } from "../constants/types";
 import {
     getCurrentWaveHeightForSpot,
     getCurrentPeriodForSpot,
     getTidesData,
     getCurrentTide,
 } from "../utils/surfUtils";
-import getSurfConditions from "../utils/surfConditions";
+import { Database } from "../lib/database.types";
+type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
 
-export default async function SpotDetails({ spot }: { spot: FullSpot }) {
+export default async function SpotDetails({
+    spot,
+}: {
+    spot: PintxoConditions;
+}) {
     console.log("spot", spot);
     // getting curent tide to display for every spot
     let curTide = "";
-    let currentCondition: string[] = [];
+    let currentPintxoCondition: string[] = [];
     const currentTime = new Date().toISOString().slice(0, 13) + ":00";
     const timeIndex =
-        spot?.hourlySpotForecast?.hourly.time.indexOf(currentTime);
+        spot?.hourlyspotforecast?.hourly.time.indexOf(currentTime);
     try {
         const tidesData = await getTidesData();
         curTide = await getCurrentTide(tidesData);
-        const surfConditions = getSurfConditions(spot, tidesData);
+        const pintxoCondition = spot.pintxo;
         if (
-            surfConditions &&
+            pintxoCondition &&
             typeof timeIndex !== "undefined" &&
             timeIndex !== -1
         ) {
-            currentCondition = surfConditions
+            currentPintxoCondition = pintxoCondition
                 .slice(timeIndex, timeIndex + 3)
-                .map((conditionObj) => conditionObj.condition);
-            console.log(currentCondition);
+                .map((conditionObj) => conditionObj?.condition);
+            console.log(currentPintxoCondition);
         }
     } catch (err) {
         console.log((err as Error).message);
@@ -43,7 +47,7 @@ export default async function SpotDetails({ spot }: { spot: FullSpot }) {
                     </span>
                     <div className="bg-emerald-400 w-48 h-4 rounded-sm flex flex-row items-center ">
                         <span className="text-dark font-body font-light">
-                            {currentCondition[0]}
+                            {currentPintxoCondition[0]}
                         </span>
                     </div>
                 </div>

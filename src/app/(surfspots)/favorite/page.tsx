@@ -1,12 +1,15 @@
-import SpotDetails from "@/app/components/SpotDetails";
-import { Database } from "@/app/lib/database.types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { fetchSpotSurfData } from "@/app/utils/surfUtils";
 import { FullSpot, SurfSpot, FavoriteSpot } from "@/app/constants/types";
 import Link from "next/link";
+//Components
+import SpotDetails from "@/app/components/SpotDetails";
+//types
+import { Database } from "@/app/lib/database.types";
+type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
 
-async function getFavoriteSpots(): Promise<SurfSpot[]> {
+async function getFavoriteSpots(): Promise<PintxoConditions[]> {
     try {
         const supabase = await createServerComponentClient<Database>({
             cookies,
@@ -25,7 +28,7 @@ async function getFavoriteSpots(): Promise<SurfSpot[]> {
             const spotIds = data?.map((item) => item.spot_id) || [];
             if (spotIds.length) {
                 const { data, error } = await supabase
-                    .from("surfspots")
+                    .from("spot_conditions")
                     .select("*")
                     .in("spot_id", spotIds);
                 return data || [];
@@ -38,24 +41,24 @@ async function getFavoriteSpots(): Promise<SurfSpot[]> {
 }
 
 export default async function FavoriteSpots() {
-    const favoriteSpots = await getFavoriteSpots();
-    let favoriteSpotsData: FullSpot[] = [];
+    const favoriteSpotsData = await getFavoriteSpots();
+    // let favoriteSpotsData: PintxoConditions[] = [];
 
-    if (favoriteSpots.length) {
-        favoriteSpotsData = await Promise.all(
-            favoriteSpots.map(async (spot) => {
-                try {
-                    return await fetchSpotSurfData(spot);
-                } catch (error) {
-                    console.error(
-                        `Error fetching data for spot ${spot.name}:`,
-                        error
-                    );
-                    return null; // or return a default value or error object
-                }
-            })
-        );
-    }
+    // if (favoriteSpots.length) {
+    //     favoriteSpotsData = await Promise.all(
+    //         favoriteSpots.map(async (spot) => {
+    //             try {
+    //                 return await fetchSpotSurfData(spot);
+    //             } catch (error) {
+    //                 console.error(
+    //                     `Error fetching data for spot ${spot.name}:`,
+    //                     error
+    //                 );
+    //                 return null; // or return a default value or error object
+    //             }
+    //         })
+    //     );
+    // }
 
     return (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 xl:grid-cols-6 md:grid-cols-2 ">

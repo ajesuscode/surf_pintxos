@@ -1,3 +1,9 @@
+import {
+    HourlySurfData,
+    HourlyWeatherData,
+    Pintxo,
+} from "@/app/constants/types";
+
 export type Json =
     | string
     | number
@@ -27,6 +33,81 @@ export interface Database {
                     favorite_id?: string;
                     spot_id?: string;
                     user_id?: string | null;
+                };
+                Relationships: [];
+            };
+            spot_conditions: {
+                Row: {
+                    about: string | null;
+                    best_surf: string | null;
+                    board: Json | null;
+                    crowd: string | null;
+                    drive: string | null;
+                    hourlyspotforecast: HourlySurfData | null;
+                    hourlyweatherdata: HourlyWeatherData | null;
+                    lat: number | null;
+                    long: number | null;
+                    name: string | null;
+                    pintxo: Pintxo[] | null;
+                    seabed: string | null;
+                    season: string | null;
+                    spot_id: string;
+                    spot_rating: string | null;
+                    surfer: string | null;
+                    swell: string | null;
+                    swell_direction: string | null;
+                    swell_handle: string | null;
+                    water_quality: string | null;
+                    wavetype: string | null;
+                    windy: string | null;
+                };
+                Insert: {
+                    about?: string | null;
+                    best_surf?: string | null;
+                    board?: Json | null;
+                    crowd?: string | null;
+                    drive?: string | null;
+                    hourlyspotforecast?: HourlySurfData | null;
+                    hourlyweatherdata?: HourlyWeatherData | null;
+                    lat?: number | null;
+                    long?: number | null;
+                    name?: string | null;
+                    pintxo?: Pintxo[] | null;
+                    seabed?: string | null;
+                    season?: string | null;
+                    spot_id: string;
+                    spot_rating?: string | null;
+                    surfer?: string | null;
+                    swell?: string | null;
+                    swell_direction?: string | null;
+                    swell_handle?: string | null;
+                    water_quality?: string | null;
+                    wavetype?: string | null;
+                    windy?: string | null;
+                };
+                Update: {
+                    about?: string | null;
+                    best_surf?: string | null;
+                    board?: Json | null;
+                    crowd?: string | null;
+                    drive?: string | null;
+                    hourlyspotforecast?: HourlySurfData | null;
+                    hourlyweatherdata?: HourlyWeatherData | null;
+                    lat?: number | null;
+                    long?: number | null;
+                    name?: string | null;
+                    pintxo?: Pintxo[] | null;
+                    seabed?: string | null;
+                    season?: string | null;
+                    spot_id?: string;
+                    spot_rating?: string | null;
+                    surfer?: string | null;
+                    swell?: string | null;
+                    swell_direction?: string | null;
+                    swell_handle?: string | null;
+                    water_quality?: string | null;
+                    wavetype?: string | null;
+                    windy?: string | null;
                 };
                 Relationships: [];
             };

@@ -10,6 +10,7 @@ import {
     ForecastDataResponse,
 } from "../constants/types";
 import { Database } from "../lib/database.types";
+type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
 
 export async function fetchSpotSurfData(spot: SurfSpot) {
     const marineApiUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${spot.lat}&longitude=${spot.long}&hourly=wave_height,wave_direction,wave_period,swell_wave_height,swell_wave_direction,swell_wave_period`;
@@ -35,30 +36,32 @@ export async function fetchSpotSurfData(spot: SurfSpot) {
     };
 }
 
-export function getCurrentWaveHeightForSpot(spot: FullSpot): string | null {
+export function getCurrentWaveHeightForSpot(
+    spot: PintxoConditions
+): string | null {
     if (!spot) return null; // Check if spot is null
 
     const currentTime = new Date().toISOString().slice(0, 13) + ":00";
-    const timeIndex = spot.hourlySpotForecast?.hourly.time.indexOf(currentTime);
+    const timeIndex = spot.hourlyspotforecast?.hourly.time.indexOf(currentTime);
 
     if (timeIndex !== undefined && timeIndex !== -1) {
         const currentWaveHeight =
-            spot.hourlySpotForecast?.hourly.wave_height[timeIndex];
+            spot.hourlyspotforecast?.hourly.wave_height[timeIndex];
         return currentWaveHeight ? currentWaveHeight.toFixed(1) : null;
     } else {
         return null;
     }
 }
 
-export function getCurrentPeriodForSpot(spot: FullSpot): string | null {
+export function getCurrentPeriodForSpot(spot: PintxoConditions): string | null {
     if (!spot) return null; // Check if spot is null
 
     const currentTime = new Date().toISOString().slice(0, 13) + ":00";
-    const timeIndex = spot.hourlySpotForecast?.hourly.time.indexOf(currentTime);
+    const timeIndex = spot.hourlyspotforecast?.hourly.time.indexOf(currentTime);
 
     if (timeIndex !== undefined && timeIndex !== -1) {
         const currentPeriod =
-            spot.hourlySpotForecast?.hourly.wave_period[timeIndex];
+            spot.hourlyspotforecast?.hourly.wave_period[timeIndex];
         return currentPeriod ? currentPeriod.toFixed(0) : null;
     } else {
         return null;

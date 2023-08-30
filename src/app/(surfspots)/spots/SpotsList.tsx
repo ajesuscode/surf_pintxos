@@ -3,30 +3,18 @@ import Link from "next/link";
 import NotFound from "../../not-found";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { fetchSpotSurfData } from "@/app/utils/surfUtils";
-import type { Database } from "../../lib/database.types";
-import type { SurfSpot, FullSpot, HourlySurfData } from "@/app/constants/types";
-import SpotDetails from "@/app/components/SpotDetails";
+import type { Database } from "@/app/lib/database.types";
 
-async function fetchAllSpotsData(spots: SurfSpot[]): Promise<FullSpot[]> {
-    try {
-        const results = await Promise.all(spots.map(fetchSpotSurfData));
-        return results;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        return []; // Ensure you return an empty array in case of an error
-    }
-}
+import SpotDetails from "@/app/components/SpotDetails";
 
 export default async function SpotsList() {
     const supabase = createServerComponentClient<Database>({ cookies });
 
-    const { data: spots } = await supabase.from("surfspots").select("*");
-
-    let allSpotsData: FullSpot[] = [];
-
-    if (spots) {
-        allSpotsData = await fetchAllSpotsData(spots);
+    const { data: allSpotsData, error } = await supabase
+        .from("spot_conditions")
+        .select();
+    if (error) {
+        console.log("ERROR", error.message);
     }
 
     return (
