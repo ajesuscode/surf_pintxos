@@ -19,7 +19,7 @@ export default async function SpotsList() {
 
     return (
         <>
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 xl:grid-cols-6 md:grid-cols-2 ">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-4  md:grid-cols-2 ">
                 {allSpotsData &&
                     allSpotsData.map((spot) => {
                         if (spot) {

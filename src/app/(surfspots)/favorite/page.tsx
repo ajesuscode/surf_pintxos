@@ -61,7 +61,7 @@ export default async function FavoriteSpots() {
     // }
 
     return (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 xl:grid-cols-6 md:grid-cols-2 ">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 md:grid-cols-2 ">
             {favoriteSpotsData &&
                 favoriteSpotsData.map((spot) => {
                     if (spot) {

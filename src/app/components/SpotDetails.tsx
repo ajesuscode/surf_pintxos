@@ -6,8 +6,10 @@ import {
     getCurrentPeriodForSpot,
     getTidesData,
     getCurrentTide,
+    getCurrentWind,
 } from "../utils/surfUtils";
 import { Database } from "../lib/database.types";
+import { WaveHeightIcon, WindIcon } from "./icons/icons";
 type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
 type PintxoName =
     | "Empty Plate"
@@ -74,7 +76,7 @@ export default async function SpotDetails({
     return (
         <div className="flex flex-col justify-start p-4 bg-dark rounded-md shadow-md">
             <div className="flex flex-row justify-between gap-4">
-                <div className="flex flex-col justify-between gap-0">
+                <div className="flex flex-col justify-start gap-4">
                     <span className="text-light font-body font-regular text-lg">
                         {spot?.name?.slice(0, 21) ?? ""}
                     </span>
@@ -84,19 +86,30 @@ export default async function SpotDetails({
                                 key={index}
                                 className={`${getPintxoColor(
                                     condition as PintxoName
-                                )} p-1 rounded-sm flex flex-row justify-start items-center w-8`}
+                                )} p-1 rounded-sm flex flex-row justify-start items-center w-8 h-8`}
                             ></div>
                         ))}
                     </div>
                 </div>
 
-                <div className="flex flex-col justify-between gap-0 ">
-                    <span className="text-light font-body font-regular text-2xl">
-                        {getCurrentWaveHeightForSpot(spot) || null} {"m"}
-                    </span>
+                <div className="flex flex-col justify-between gap-0 items-end">
+                    <div className="flex flex-row gap-4 align-start">
+                        <WaveHeightIcon size={24} color="text-light" />
+                        <span className="text-light font-body font-regular text-2xl">
+                            {getCurrentWaveHeightForSpot(spot) || null} {"m"}
+                        </span>
+                    </div>
+
                     <span className="text-light font-body font-light text-lg">
-                        {getCurrentPeriodForSpot(spot) || null} {"sec"}
+                        {getCurrentPeriodForSpot(spot) || null}{" "}
+                        <span className="text-xs">s</span>
                     </span>
+                    <div className="flex flex-row gap-4 items-center">
+                        <WindIcon size={24} color="text-light/50" />
+                        <span className="text-light font-body text-sm font-thin">
+                            {getCurrentWind(spot) || null}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
