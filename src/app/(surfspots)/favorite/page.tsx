@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { fetchSpotSurfData } from "@/app/utils/surfUtils";
 import { FullSpot, SurfSpot, FavoriteSpot } from "@/app/constants/types";
 import Link from "next/link";
+
 //Components
 import SpotDetails from "@/app/components/SpotDetails";
 //types

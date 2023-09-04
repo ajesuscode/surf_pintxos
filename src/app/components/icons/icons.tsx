@@ -155,3 +155,47 @@ export function WindIcon({ size, color }: IconProps) {
         </svg>
     );
 }
+
+export function RisingTideIcon({ size, color }: IconProps) {
+    return (
+        <svg
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            className={color}
+        >
+            <g id="evaDiagonalArrowRightUpFill0">
+                <g id="evaDiagonalArrowRightUpFill1">
+                    <path
+                        id="evaDiagonalArrowRightUpFill2"
+                        fill="currentColor"
+                        d="M18 7.05a1 1 0 0 0-1-1L9 6a1 1 0 0 0 0 2h5.56l-8.27 8.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0L16 9.42V15a1 1 0 0 0 1 1a1 1 0 0 0 1-1Z"
+                    />
+                </g>
+            </g>
+        </svg>
+    );
+}
+
+export function FallinTideIcon({ size, color }: IconProps) {
+    return (
+        <svg
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            className={color}
+        >
+            <g id="evaDiagonalArrowLeftDownFill0">
+                <g id="evaDiagonalArrowLeftDownFill1">
+                    <path
+                        id="evaDiagonalArrowLeftDownFill2"
+                        fill="currentColor"
+                        d="M17.71 6.29a1 1 0 0 0-1.42 0L8 14.59V9a1 1 0 0 0-2 0v8a1 1 0 0 0 1 1h8a1 1 0 0 0 0-2H9.41l8.3-8.29a1 1 0 0 0 0-1.42Z"
+                    />
+                </g>
+            </g>
+        </svg>
+    );
+}

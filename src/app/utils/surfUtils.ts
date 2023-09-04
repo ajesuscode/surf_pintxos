@@ -153,7 +153,7 @@ export function getCurrentWind(spot: PintxoConditions): string | null {
             windType = "Onshore";
         }
 
-        return `${windType} ${windSpeed} m/s`;
+        return `${windType}`;
     }
     return null;
 }
@@ -168,43 +168,50 @@ export async function getTidesData(): Promise<TideType[]> {
     }
 }
 
-export function getCurrentTide(tides: TideType[]): string {
-    // Sort the tides based on time
-    const sortedTides = [...tides].sort(
-        (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
-    );
-
-    const now = new Date().getTime();
+export function getCurrentTide(
+    tides: TideType[]
+): { tide: string; time: string } | null {
+    const currentTime = DateTime.now()
+        .setZone("Europe/Paris")
+        .startOf("hour")
+        .toUTC();
 
     // Find the most recent tide event before the current time
-    let mostRecentTide: TideType | null = null;
-    let nextTide: TideType | null = null;
-    for (let i = sortedTides.length - 1; i >= 0; i--) {
-        if (new Date(sortedTides[i].time).getTime() <= now) {
-            mostRecentTide = sortedTides[i];
-            nextTide = sortedTides[i + 1] || null;
-            break;
+    const pastTide = tides.reduce((prev, curr) => {
+        if (DateTime.fromISO(curr.time) < currentTime) {
+            return Math.abs(
+                DateTime.fromISO(prev.time).diff(currentTime).as("minutes")
+            ) <
+                Math.abs(
+                    DateTime.fromISO(curr.time).diff(currentTime).as("minutes")
+                )
+                ? prev
+                : curr;
         }
+        return prev;
+    });
+
+    // Find the next upcoming tide event after the current time
+    const nextTide = tides.find(
+        (tide) => DateTime.fromISO(tide.time) > currentTime
+    );
+
+    // If there's no past tide or next tide, return a message
+    if (!pastTide || !nextTide) {
+        return null;
     }
 
-    // If there's no tide event before the current time or it's the last event in the array
-    if (!mostRecentTide || !nextTide) {
-        return "Cannot determine tide status";
+    // If the next tide is very close to the current time (e.g., within 1 hour and 30 minutes)
+    if (DateTime.fromISO(nextTide.time).diff(currentTime).as("minutes") <= 90) {
+        return {
+            tide: nextTide.type === "low" ? "rising" : "falling",
+            time: DateTime.fromISO(nextTide.time).toFormat("HH:mm"),
+        };
     }
 
-    const twoHoursInMillis = 2 * 60 * 60 * 1000;
-    const threeHoursInMillis = 3 * 60 * 60 * 1000;
-
-    const timeSinceLastTide = now - new Date(mostRecentTide.time).getTime();
-    const timeUntilNextTide = new Date(nextTide.time).getTime() - now;
-
-    if (
-        timeSinceLastTide <= twoHoursInMillis ||
-        timeUntilNextTide <= threeHoursInMillis
-    ) {
-        return "midtide";
-    }
-
-    // Check the tide status based on the most recent tide event
-    return mostRecentTide.type === "low" ? "rising" : "falling";
+    // Otherwise, determine the tide status based on the past tide
+    return {
+        tide: pastTide.type === "low" ? "rising" : "falling",
+        time: DateTime.fromISO(nextTide.time).toFormat("HH:mm"),
+    };
 }

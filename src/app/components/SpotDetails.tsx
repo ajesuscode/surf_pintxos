@@ -46,7 +46,8 @@ export default async function SpotDetails({
     spot: PintxoConditions;
 }) {
     // getting curent tide to display for every spot
-    let curTide = "";
+    let curTide: { tide: string; time: string } | null =
+        { tide: "", time: "" } || null;
     let currentPintxoCondition: string[] = [];
     const currentTime = DateTime.now()
         .setZone("Europe/Paris")
@@ -102,7 +103,7 @@ export default async function SpotDetails({
 
                     <span className="text-light font-body font-light text-lg">
                         {getCurrentPeriodForSpot(spot) || null}{" "}
-                        <span className="text-xs">s</span>
+                        <span className="text-xs">sec</span>
                     </span>
                     <div className="flex flex-row gap-4 items-center">
                         <WindIcon size={24} color="text-light/50" />
