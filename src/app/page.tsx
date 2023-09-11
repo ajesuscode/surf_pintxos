@@ -7,6 +7,7 @@ import { Database } from "./lib/database.types";
 import pintxos_lg from "./components/pintxo_lg_logo.png";
 import { redirect } from "next/navigation";
 export default async function Home() {
+    //TODO add redirection when !user
     const supabase = createServerComponentClient<Database>({ cookies });
     const {
         data: { user },

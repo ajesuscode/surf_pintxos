@@ -54,6 +54,7 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
+    //TODO add redirection if user or !user
     const supabase = createServerComponentClient<Database>({ cookies });
     const {
         data: { user },
