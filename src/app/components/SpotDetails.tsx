@@ -9,7 +9,7 @@ import {
     getCurrentWind,
 } from "../utils/surfUtils";
 import { Database } from "../lib/database.types";
-import { WaveHeightIcon, WindIcon } from "./icons/icons";
+import { PeriodIcon, WaveHeightIcon, WindIcon } from "./icons/icons";
 type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
 type PintxoName =
     | "Empty Plate"
@@ -75,10 +75,10 @@ export default async function SpotDetails({
     }
 
     return (
-        <div className="flex flex-col justify-start p-4 bg-dark rounded-md shadow-md">
-            <div className="flex flex-row justify-between gap-4">
-                <div className="flex flex-col justify-start gap-4">
-                    <span className="text-light font-body font-regular text-lg">
+        <div className="flex flex-col justify-start  bg-dark rounded-md shadow-md">
+            <div className="flex flex-row justify-between gap-4 ">
+                <div className="flex flex-col justify-start gap-4 p-4">
+                    <span className="text-light font-body font-regular text-xl">
                         {spot?.name?.slice(0, 21) ?? ""}
                     </span>
                     <div className="flex flex-row gap-1 justify-start w-54">
@@ -93,19 +93,22 @@ export default async function SpotDetails({
                     </div>
                 </div>
 
-                <div className="flex flex-col justify-between gap-0 items-end">
-                    <div className="flex flex-row gap-4 align-start">
+                <div className="flex flex-col gap-1 items-start justify-around bg-light/5 opacity-50 p-4 rounded-md">
+                    <div className="flex flex-row gap-2 justify-between w-full ">
                         <WaveHeightIcon size={24} color="text-light" />
                         <span className="text-light font-body font-regular text-2xl">
                             {getCurrentWaveHeightForSpot(spot) || null} {"m"}
                         </span>
                     </div>
+                    <div className="flex flex-row gap-2 items-center justify-between w-full">
+                        <PeriodIcon size={24} color="text-light/50" />
+                        <span className="text-light font-body font-light text-lg justify-between">
+                            {getCurrentPeriodForSpot(spot) || null}{" "}
+                            <span className="text-xs">sec</span>
+                        </span>
+                    </div>
 
-                    <span className="text-light font-body font-light text-lg">
-                        {getCurrentPeriodForSpot(spot) || null}{" "}
-                        <span className="text-xs">sec</span>
-                    </span>
-                    <div className="flex flex-row gap-4 items-center">
+                    <div className="flex flex-row gap-2 items-center justify-between w-full">
                         <WindIcon size={24} color="text-light/50" />
                         <span className="text-light font-body text-sm font-thin">
                             {getCurrentWind(spot) || null}

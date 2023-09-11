@@ -6,9 +6,14 @@ import type { Database } from "@/app/lib/database.types";
 import Link from "next/link";
 import { AddFavoriteIcon, ArrowBackIcon } from "@/app/components/icons/icons";
 import AddToFavoriteBtn from "@/app/components/AddToFavoriteBtn";
+import dynamic from "next/dynamic";
 
 type SurfSpot = Database["public"]["Tables"]["surfspots"]["Row"];
 type FullSpot = (SurfSpot & { hourlySpotForecast: HourlySurfData }) | null;
+
+const PintxoMap = dynamic(() => import("@/app/components/Map"), {
+    ssr: false,
+});
 
 async function getSpotDetails(id: string) {
     try {
@@ -52,7 +57,6 @@ export default async function SpotDetails({
     const spot = await getSpotDetails(id);
     const favorite = await isSpotFavorite(id);
     const isFavorite = !!favorite;
-    console.log("SPOT IS FAVORITE", isFavorite);
 
     return (
         <>
@@ -74,6 +78,8 @@ export default async function SpotDetails({
                             />
                         </div>
                     </div>
+
+                    <PintxoMap lat={spot.lat} long={spot.long} />
                 </main>
             )}
         </>
