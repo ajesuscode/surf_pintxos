@@ -11,7 +11,7 @@ import { User } from "@supabase/supabase-js";
 
 export default function Navbar({ user }: { user: User | null }) {
     return (
-        <div className="fixed w-full h-16 flex flex-row justify-between items-center px-4 lg:px-12 bg-primary shadow-sm">
+        <div className="fixed w-full h-16 flex flex-row justify-between items-center px-4 lg:px-12 bg-primary shadow-sm z-50">
             <Link href="/">
                 <Image
                     src={pintxo_lg}

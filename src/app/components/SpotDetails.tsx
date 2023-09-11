@@ -10,6 +10,7 @@ import {
 } from "../utils/surfUtils";
 import { Database } from "../lib/database.types";
 import { WaveHeightIcon, WindIcon } from "./icons/icons";
+import { PintxoRange } from "./PintxoRange";
 type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
 type PintxoName =
     | "Empty Plate"
@@ -48,7 +49,7 @@ export default async function SpotDetails({
     // getting curent tide to display for every spot
     let curTide: { tide: string; time: string } | null =
         { tide: "", time: "" } || null;
-    let currentPintxoCondition: string[] = [];
+    let currentPintxoCondition: { time: string; condition: string }[] = [];
     const currentTime = DateTime.now()
         .setZone("Europe/Paris")
         .startOf("hour")
@@ -60,6 +61,7 @@ export default async function SpotDetails({
         const tidesData = await getTidesData();
         curTide = await getCurrentTide(tidesData);
         const pintxoCondition = spot.pintxo;
+
         if (
             pintxoCondition &&
             typeof timeIndex !== "undefined" &&
@@ -67,8 +69,10 @@ export default async function SpotDetails({
         ) {
             currentPintxoCondition = pintxoCondition
                 .slice(timeIndex, timeIndex + 3)
-                .map((conditionObj) => conditionObj?.condition);
-            console.log(currentPintxoCondition);
+                .map((conditionObj) => ({
+                    time: conditionObj?.time,
+                    condition: conditionObj?.condition,
+                }));
         }
     } catch (err) {
         console.log((err as Error).message);
@@ -83,12 +87,10 @@ export default async function SpotDetails({
                     </span>
                     <div className="flex flex-row gap-1 justify-start w-54">
                         {currentPintxoCondition.map((condition, index) => (
-                            <div
+                            <PintxoRange
                                 key={index}
-                                className={`${getPintxoColor(
-                                    condition as PintxoName
-                                )} p-1 rounded-sm flex flex-row justify-start items-center w-8 h-16`}
-                            ></div>
+                                pintxoCondition={condition}
+                            />
                         ))}
                     </div>
                 </div>
