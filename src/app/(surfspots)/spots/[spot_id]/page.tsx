@@ -6,31 +6,20 @@ import type { Database } from "@/app/lib/database.types";
 import Link from "next/link";
 import { AddFavoriteIcon, ArrowBackIcon } from "@/app/components/icons/icons";
 import AddToFavoriteBtn from "@/app/components/AddToFavoriteBtn";
+import SpotInfoAccordeon from "@/app/components/SpotInfoAccordeon";
 
-type SurfSpot = Database["public"]["Tables"]["surfspots"]["Row"];
-type FullSpot = (SurfSpot & { hourlySpotForecast: HourlySurfData }) | null;
+async function getSpotInfo(id: string) {
+    const supabase = createServerComponentClient<Database>({ cookies });
 
-async function getSpotDetails(id: string) {
-    try {
-        const supabase = createServerComponentClient({ cookies });
-        const { data: spot } = await supabase
-            .from("surfspots")
-            .select("*")
-            .eq("spot_id", id);
-        if (!spot || spot.length === 0) {
-            throw new Error("Spot not found");
-        }
-        const lat = spot[0]?.lat;
-        const long = spot[0]?.long;
-        const res = await fetch(
-            `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${long}&hourly=wave_height,wave_direction,wave_period,swell_wave_height,swell_wave_direction,swell_wave_period`
-        );
-        const hourlySpotForecast: HourlySurfData = await res.json();
-        const fullSpot: FullSpot = { ...spot[0], hourlySpotForecast };
-        return fullSpot;
-    } catch (error) {
-        console.log(error);
+    const { data: spot, error } = await supabase
+        .from("spot_conditions")
+        .select()
+        .eq("spot_id", id)
+        .single();
+    if (error) {
+        console.log("ERROR", error.message);
     }
+    return spot;
 }
 
 async function isSpotFavorite(id: string) {
@@ -43,16 +32,15 @@ async function isSpotFavorite(id: string) {
     return data;
 }
 
-export default async function SpotDetails({
+export default async function SpotPage({
     params,
 }: {
     params: { spot_id: string };
 }) {
     const id = params.spot_id;
-    const spot = await getSpotDetails(id);
+    const spot = await getSpotInfo(id);
     const favorite = await isSpotFavorite(id);
     const isFavorite = !!favorite;
-    console.log("SPOT IS FAVORITE", isFavorite);
 
     return (
         <>
@@ -73,6 +61,7 @@ export default async function SpotDetails({
                                 isFavorite={isFavorite}
                             />
                         </div>
+                        <SpotInfoAccordeon spot={spot} />
                     </div>
                 </main>
             )}

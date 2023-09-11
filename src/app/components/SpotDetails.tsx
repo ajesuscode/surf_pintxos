@@ -78,7 +78,7 @@ export default async function SpotDetails({
         <div className="flex flex-col justify-start p-4 bg-dark rounded-md shadow-md">
             <div className="flex flex-row justify-between gap-4">
                 <div className="flex flex-col justify-start gap-4">
-                    <span className="text-light font-body font-regular text-lg">
+                    <span className="text-light font-body font-regular text-xl">
                         {spot?.name?.slice(0, 21) ?? ""}
                     </span>
                     <div className="flex flex-row gap-1 justify-start w-54">
@@ -87,14 +87,14 @@ export default async function SpotDetails({
                                 key={index}
                                 className={`${getPintxoColor(
                                     condition as PintxoName
-                                )} p-1 rounded-sm flex flex-row justify-start items-center w-8 h-8`}
+                                )} p-1 rounded-sm flex flex-row justify-start items-center w-8 h-16`}
                             ></div>
                         ))}
                     </div>
                 </div>
 
                 <div className="flex flex-col justify-between gap-0 items-end">
-                    <div className="flex flex-row gap-4 align-start">
+                    <div className="flex flex-row gap-4 align-start w-full justify-between">
                         <WaveHeightIcon size={24} color="text-light" />
                         <span className="text-light font-body font-regular text-2xl">
                             {getCurrentWaveHeightForSpot(spot) || null} {"m"}
