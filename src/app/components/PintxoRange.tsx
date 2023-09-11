@@ -15,7 +15,7 @@ export const PintxoRange: React.FC<PintxoRangeProps> = ({
 }) => {
     console.log("pintxoCondition", pintxoCondition);
     const utcDateTime = DateTime.fromISO(pintxoCondition.time, { zone: "utc" });
-    const localDateTime = utcDateTime.toLocal().toFormat("HH:mm");
+    const localDateTime = utcDateTime.setZone("Europe/Paris").toFormat("HH:mm");
     const arrowPosition = getArrowPosition(pintxoCondition.condition);
     const arrowColor = getArrowColor(pintxoCondition.condition);
 

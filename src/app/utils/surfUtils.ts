@@ -171,19 +171,19 @@ export async function getTidesData(): Promise<TideType[]> {
 export function getCurrentTide(
     tides: TideType[]
 ): { tide: string; time: string } | null {
-    const currentTime = DateTime.now()
-        .setZone("Europe/Paris")
-        .startOf("hour")
-        .toUTC();
+    // Get the current time in UTC for comparisons
+    const currentTimeUTC = DateTime.now().toUTC();
 
     // Find the most recent tide event before the current time
     const pastTide = tides.reduce((prev, curr) => {
-        if (DateTime.fromISO(curr.time) < currentTime) {
+        if (DateTime.fromISO(curr.time) < currentTimeUTC) {
             return Math.abs(
-                DateTime.fromISO(prev.time).diff(currentTime).as("minutes")
+                DateTime.fromISO(prev.time).diff(currentTimeUTC).as("minutes")
             ) <
                 Math.abs(
-                    DateTime.fromISO(curr.time).diff(currentTime).as("minutes")
+                    DateTime.fromISO(curr.time)
+                        .diff(currentTimeUTC)
+                        .as("minutes")
                 )
                 ? prev
                 : curr;
@@ -193,7 +193,7 @@ export function getCurrentTide(
 
     // Find the next upcoming tide event after the current time
     const nextTide = tides.find(
-        (tide) => DateTime.fromISO(tide.time) > currentTime
+        (tide) => DateTime.fromISO(tide.time) > currentTimeUTC
     );
 
     // If there's no past tide or next tide, return a message
@@ -202,16 +202,24 @@ export function getCurrentTide(
     }
 
     // If the next tide is very close to the current time (e.g., within 1 hour and 30 minutes)
-    if (DateTime.fromISO(nextTide.time).diff(currentTime).as("minutes") <= 90) {
+    if (
+        DateTime.fromISO(nextTide.time).diff(currentTimeUTC).as("minutes") <= 90
+    ) {
         return {
             tide: nextTide.type === "low" ? "rising" : "falling",
-            time: DateTime.fromISO(nextTide.time).toFormat("HH:mm"),
+            // Convert the time to Europe/Paris timezone for the final response
+            time: DateTime.fromISO(nextTide.time)
+                .setZone("Europe/Paris")
+                .toFormat("HH:mm"),
         };
     }
 
     // Otherwise, determine the tide status based on the past tide
     return {
         tide: pastTide.type === "low" ? "rising" : "falling",
-        time: DateTime.fromISO(nextTide.time).toFormat("HH:mm"),
+        // Convert the time to Europe/Paris timezone for the final response
+        time: DateTime.fromISO(nextTide.time)
+            .setZone("Europe/Paris")
+            .toFormat("HH:mm"),
     };
 }
