@@ -1,0 +1,31 @@
+name: Check TODOs
+
+on: [push]
+
+jobs:
+    check-todos:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Check for TODOs
+              run: |
+                  # Scan for TODOs in the src/ directory and format the output
+                  grep -rnP "//TODO.*(\n.*//TODO)*" src/ | sed 's/:/: /' > temp_todos.md
+
+                  # If existing_todos.md doesn't exist, create it
+                  touch existing_todos.md
+
+                  # Compare temp_todos.md with existing_todos.md
+                  # If they're different, update existing_todos.md
+                  if ! cmp temp_todos.md existing_todos.md > /dev/null 2>&1
+                  then
+                    mv temp_todos.md existing_todos.md
+                    git config --local user.email "action@github.com"
+                    git config --local user.name "GitHub Action"
+                    git add existing_todos.md
+                    git commit -m "Update TODOs"
+                    git push
+                  fi
