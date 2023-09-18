@@ -1,0 +1,11 @@
+.gradient-div {
+    background: linear-gradient(
+        0deg,
+        #c084fc,
+        #f87171,
+        #fb923c,
+        #facc15,
+        #a3e635,
+        #4ade80
+    );
+}
