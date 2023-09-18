@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import { PointerIcon } from "./icons/icons";
+import "./PintxoRange.css";
 
 interface PintxoCondition {
     time: string;
@@ -13,27 +14,19 @@ interface PintxoRangeProps {
 export const PintxoRange: React.FC<PintxoRangeProps> = ({
     pintxoCondition,
 }) => {
-    console.log("pintxoCondition", pintxoCondition);
     const utcDateTime = DateTime.fromISO(pintxoCondition.time, { zone: "utc" });
     const localDateTime = utcDateTime.setZone("Europe/Paris").toFormat("HH:mm");
     const arrowPosition = getArrowPosition(pintxoCondition.condition);
     const arrowColor = getArrowColor(pintxoCondition.condition);
 
     return (
-        <div className="flex flex-col gap-2 justify-center items-start">
-            <div className="relative w-8 h-20 mr-4 rounded-sm  opacity-90">
-                <div className="absolute inset-x-0 bottom-0 w-full h-1/6 bg-purple-400"></div>
-                <div className="absolute inset-x-0 bottom-[16.6%] w-full h-1/6 bg-red-400"></div>
-                <div className="absolute inset-x-0 bottom-[33.33%] w-full h-1/6 bg-orange-400"></div>
-                <div className="absolute inset-x-0 bottom-[50%] w-full h-1/6 bg-yellow-400"></div>
-                <div className="absolute inset-x-0 bottom-[66.66%] w-full h-1/6 bg-lime-400"></div>
-                <div className="absolute inset-x-0 bottom-[83.33%] w-full h-1/6 bg-green-400"></div>
-
+        <div className="flex flex-col gap-2 justify-center items-start mb-4">
+            <div className="relative w-6 h-16 mr-2 rounded-sm  gradient-div opacity-70">
                 <div
-                    className={`absolute left-[95%]  bottom-[${arrowPosition}]
+                    className={`absolute left-[-25%]  bottom-[${arrowPosition}] inset-x-0 
                 `}
                 >
-                    <PointerIcon size={12} color={`${arrowColor}`} />
+                    <div className={`w-9 h-1 ${arrowColor} rounded-sm`}></div>
                 </div>
             </div>
             <div className="font-body text-light/50 text-xs font-medium">
@@ -65,18 +58,18 @@ function getArrowPosition(condition: string): string {
 function getArrowColor(condition: string): string {
     switch (condition) {
         case "Empty Plate":
-            return "text-purple-400";
+            return "bg-purple-300";
         case "Bread Only":
-            return "text-red-400";
+            return "bg-red-300";
         case "Gilda":
-            return "text-orange-400";
+            return "bg-orange-300";
         case "Txistorra":
-            return "text-yellow-400";
+            return "bg-yellow-300";
         case "Gambas":
-            return "text-lime-400";
+            return "bg-lime-300";
         case "Txuleta Feast":
-            return "text-green-400";
+            return "bg-green-300";
         default:
-            return "text-grey-400";
+            return "bg-grey-300";
     }
 }

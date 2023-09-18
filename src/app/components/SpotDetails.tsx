@@ -68,7 +68,7 @@ export default async function SpotDetails({
             timeIndex !== -1
         ) {
             currentPintxoCondition = pintxoCondition
-                .slice(timeIndex, timeIndex + 3)
+                .slice(timeIndex, timeIndex + 5)
                 .map((conditionObj) => ({
                     time: conditionObj?.time,
                     condition: conditionObj?.condition,
@@ -80,12 +80,12 @@ export default async function SpotDetails({
 
     return (
         <div className="flex flex-col justify-start p-4 bg-dark rounded-md shadow-md">
-            <div className="flex flex-row justify-between gap-4">
+            <div className="flex-1 flex-row justify-between gap-4">
                 <div className="flex flex-col justify-start gap-4">
                     <span className="text-light font-body font-regular text-xl">
                         {spot?.name?.slice(0, 21) ?? ""}
                     </span>
-                    <div className="flex flex-row gap-1 justify-start w-54">
+                    <div className="flex flex-row gap-4 justify-start  items-start ml-2 lg:m-0">
                         {currentPintxoCondition.map((condition, index) => (
                             <PintxoRange
                                 key={index}
@@ -95,20 +95,21 @@ export default async function SpotDetails({
                     </div>
                 </div>
 
-                <div className="flex flex-col justify-between gap-0 items-end">
-                    <div className="flex flex-row gap-4 align-start w-full justify-between">
-                        <WaveHeightIcon size={24} color="text-light" />
-                        <span className="text-light font-body font-regular text-2xl">
+                <div className="flex flex-row justify-between gap-2">
+                    <div className="flex flex-row gap-4  justify-start items-center bg-light/5 p-2 rounded-sm">
+                        <WaveHeightIcon size={20} color="text-light" />
+                        <span className="text-light font-body font-medium text-lg">
                             {getCurrentWaveHeightForSpot(spot) || null} {"m"}
                         </span>
                     </div>
-
-                    <span className="text-light font-body font-light text-lg">
-                        {getCurrentPeriodForSpot(spot) || null}{" "}
-                        <span className="text-xs">sec</span>
-                    </span>
-                    <div className="flex flex-row gap-4 items-center">
-                        <WindIcon size={24} color="text-light/50" />
+                    <div className="flex flex-row gap-4  justify-start items-center bg-light/5 p-2 rounded-sm">
+                        <span className="text-light font-body font-light text-lg">
+                            {getCurrentPeriodForSpot(spot) || null}{" "}
+                            <span className="text-xs">s.</span>
+                        </span>
+                    </div>
+                    <div className="flex flex-row gap-4 items-center  justify-start bg-light/5 p-2 rounded-sm">
+                        <WindIcon size={20} color="text-light/50" />
                         <span className="text-light font-body text-sm font-thin">
                             {getCurrentWind(spot) || null}
                         </span>
