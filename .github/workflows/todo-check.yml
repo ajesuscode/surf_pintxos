@@ -13,7 +13,7 @@ jobs:
             - name: Check for TODOs
               run: |
                   # Scan for TODOs in the src/ directory and format the output
-                  grep -rnP "//TODO.*(\n.*//TODO)*" src/ | sed 's/:/: /' > temp_todos.md
+                  grep -rnE "//TODO|{/\* TODO \*/}" src/ | sed 's/^/- [ ] /' | sed ':a;N;$!ba;s/\n/  \n/g' > temp_todos.md
 
                   # If existing_todos.md doesn't exist, create it
                   touch existing_todos.md

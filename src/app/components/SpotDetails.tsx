@@ -11,6 +11,7 @@ import {
 import { Database } from "../lib/database.types";
 import { WaveHeightIcon, WindIcon } from "./icons/icons";
 import { PintxoRange } from "./PintxoRange";
+import { getCurrentPintxoConditions } from "../utils/surfUtils";
 type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
 type PintxoName =
     | "Empty Plate"
@@ -47,36 +48,19 @@ export default async function SpotDetails({
     spot: PintxoConditions;
 }) {
     // getting curent tide to display for every spot
-    let curTide: { tide: string; time: string } | null =
-        { tide: "", time: "" } || null;
-    let currentPintxoCondition: { time: string; condition: string }[] = [];
+    // let curTide: { tide: string; time: string } | null =
+    //     { tide: "", time: "" } || null;
+
     const currentTime = DateTime.now()
         .setZone("Europe/Paris")
         .startOf("hour")
         .toUTC()
         .toFormat("yyyy-MM-dd'T'HH:mm");
-    const timeIndex =
-        spot?.hourlyspotforecast?.hourly.time.indexOf(currentTime);
-    try {
-        const tidesData = await getTidesData();
-        curTide = await getCurrentTide(tidesData);
-        const pintxoCondition = spot.pintxo;
-
-        if (
-            pintxoCondition &&
-            typeof timeIndex !== "undefined" &&
-            timeIndex !== -1
-        ) {
-            currentPintxoCondition = pintxoCondition
-                .slice(timeIndex, timeIndex + 5)
-                .map((conditionObj) => ({
-                    time: conditionObj?.time,
-                    condition: conditionObj?.condition,
-                }));
-        }
-    } catch (err) {
-        console.log((err as Error).message);
-    }
+    const currentPintxoCondition = getCurrentPintxoConditions(
+        spot,
+        currentTime,
+        5
+    );
 
     return (
         <div className="flex flex-col justify-start p-4 bg-dark rounded-md shadow-md">

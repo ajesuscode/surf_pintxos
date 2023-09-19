@@ -14,14 +14,15 @@ interface PintxoRangeProps {
 export const PintxoRange: React.FC<PintxoRangeProps> = ({
     pintxoCondition,
 }) => {
+    console.log("CONDITION", pintxoCondition);
     const utcDateTime = DateTime.fromISO(pintxoCondition.time, { zone: "utc" });
     const localDateTime = utcDateTime.setZone("Europe/Paris").toFormat("HH:mm");
     const arrowPosition = getArrowPosition(pintxoCondition.condition);
     const arrowColor = getArrowColor(pintxoCondition.condition);
 
     return (
-        <div className="flex flex-col gap-2 justify-center items-start mb-4">
-            <div className="relative w-6 h-16 mr-2 rounded-sm gradient-div opacity-70">
+        <div className="flex flex-col gap-2 justify-center items-center mb-4">
+            <div className="relative w-6 h-16 rounded-sm gradient-div opacity-70">
                 <div
                     className={`absolute left-[-25%] w-9 h-1 ${arrowColor} rounded-sm`}
                     style={{ bottom: arrowPosition }}
@@ -29,6 +30,7 @@ export const PintxoRange: React.FC<PintxoRangeProps> = ({
             </div>
             <div className="font-body text-light/50 text-xs font-medium">
                 {localDateTime}
+                {/* TODO Add Day name and number */}
             </div>
         </div>
     );

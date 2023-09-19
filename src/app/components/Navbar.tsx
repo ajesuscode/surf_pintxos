@@ -15,7 +15,7 @@ export default function Navbar({ user }: { user: User | null }) {
             <Link href="/">
                 <Image
                     src={pintxo_lg}
-                    width={24}
+                    width={20}
                     alt="surf_pintxos_logo"
                     quality={100}
                 />
@@ -35,7 +35,7 @@ export default function Navbar({ user }: { user: User | null }) {
                         </>
                     ) : (
                         <Link href="/login">
-                            <button className="py-2 px-4 rounded-md bg-light text-primary hover:bg-dark hover:text-light">
+                            <button className="p-2 px-4 rounded-md bg-light text-primary hover:bg-dark hover:text-light text-sm">
                                 Login
                             </button>
                         </Link>
