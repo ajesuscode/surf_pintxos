@@ -21,13 +21,11 @@ export const PintxoRange: React.FC<PintxoRangeProps> = ({
 
     return (
         <div className="flex flex-col gap-2 justify-center items-start mb-4">
-            <div className="relative w-6 h-16 mr-2 rounded-sm  gradient-div opacity-70">
+            <div className="relative w-6 h-16 mr-2 rounded-sm gradient-div opacity-70">
                 <div
-                    className={`absolute left-[-25%]  bottom-[${arrowPosition}] inset-x-0 
-                `}
-                >
-                    <div className={`w-9 h-1 ${arrowColor} rounded-sm`}></div>
-                </div>
+                    className={`absolute left-[-25%] w-9 h-1 ${arrowColor} rounded-sm`}
+                    style={{ bottom: arrowPosition }}
+                ></div>
             </div>
             <div className="font-body text-light/50 text-xs font-medium">
                 {localDateTime}
@@ -51,7 +49,7 @@ function getArrowPosition(condition: string): string {
         case "Txuleta Feast":
             return "83.33%";
         default:
-            return "100%";
+            return "0%";
     }
 }
 

@@ -8,16 +8,20 @@ import Link from "next/link";
 import SpotDetails from "@/app/components/SpotDetails";
 //types
 import { Database } from "@/app/lib/database.types";
+import { redirect } from "next/navigation";
 type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
 
 async function getFavoriteSpots(): Promise<PintxoConditions[]> {
+    const supabase = await createServerComponentClient<Database>({
+        cookies,
+    });
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+        redirect("/");
+    }
     try {
-        const supabase = await createServerComponentClient<Database>({
-            cookies,
-        });
-        const {
-            data: { user },
-        } = await supabase.auth.getUser();
         if (user) {
             const { data, error } = await supabase
                 .from("fav_spots")
