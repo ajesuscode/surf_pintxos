@@ -223,3 +223,30 @@ export function getCurrentTide(
             .toFormat("HH:mm"),
     };
 }
+
+export function getCurrentPintxoConditions(
+    spot: PintxoConditions,
+    currentTime: string,
+    sliceCount?: number
+): { time: string; condition: string }[] {
+    const timeIndex =
+        spot?.hourlyspotforecast?.hourly.time.indexOf(currentTime);
+    let currentPintxoCondition: { time: string; condition: string }[] = [];
+
+    if (
+        spot &&
+        spot.pintxo &&
+        typeof timeIndex !== "undefined" &&
+        timeIndex !== -1
+    ) {
+        const endIndex = sliceCount ? timeIndex + sliceCount : undefined;
+        currentPintxoCondition = spot!.pintxo
+            .slice(timeIndex, endIndex)
+            .map((conditionObj) => ({
+                time: conditionObj?.time,
+                condition: conditionObj?.condition,
+            }));
+    }
+
+    return currentPintxoCondition;
+}

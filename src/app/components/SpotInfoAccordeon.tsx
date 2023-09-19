@@ -19,13 +19,15 @@ export default function SpotInfoAccordeon({
         <>
             <button
                 onClick={toggleOpen}
-                className="font-body text-secondary bg-light/10 flex p-1 px-2 rounded-sm mx-auto text-lg"
+                className="font-body text-secondary bg-light/10 flex p-1 px-2 rounded-sm mx-auto text-sm"
             >
                 Spot Info
             </button>
             <div
-                className={`bg-light/25 w-full p-4 transition-all duration-500 ease-in-out ${
-                    isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+                className={`bg-light/25 w-full transition-all duration-500 ease-in-out ${
+                    isOpen
+                        ? "max-h-screen opacity-100 p-4"
+                        : "max-h-0 opacity-0"
                 }`}
             >
                 <div className="font-body text-light text-lg">

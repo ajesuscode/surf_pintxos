@@ -7,6 +7,9 @@ import Link from "next/link";
 import { AddFavoriteIcon, ArrowBackIcon } from "@/app/components/icons/icons";
 import AddToFavoriteBtn from "@/app/components/AddToFavoriteBtn";
 import SpotInfoAccordeon from "@/app/components/SpotInfoAccordeon";
+import { PintxoRange } from "@/app/components/PintxoRange";
+import { getCurrentPintxoConditions } from "@/app/utils/surfUtils";
+import { DateTime } from "luxon";
 
 async function getSpotInfo(id: string) {
     const supabase = createServerComponentClient<Database>({ cookies });
@@ -41,6 +44,16 @@ export default async function SpotPage({
     const spot = await getSpotInfo(id);
     const favorite = await isSpotFavorite(id);
     const isFavorite = !!favorite;
+    const currentTime = DateTime.now()
+        .setZone("Europe/Paris")
+        .startOf("hour")
+        .toUTC()
+        .toFormat("yyyy-MM-dd'T'HH:mm");
+    let currentPintxoCondition: { time: string; condition: string }[] = [];
+
+    if (spot) {
+        currentPintxoCondition = getCurrentPintxoConditions(spot, currentTime);
+    }
 
     return (
         <>
@@ -61,6 +74,15 @@ export default async function SpotPage({
                                 isFavorite={isFavorite}
                             />
                         </div>
+                        <div className="flex flex-row gap-6 justify-start  items-center ml-2 lg:m-0 overflow-y-auto mt-4">
+                            {currentPintxoCondition.map((pintxo, index) => (
+                                <PintxoRange
+                                    key={index}
+                                    pintxoCondition={pintxo}
+                                />
+                            ))}
+                        </div>
+
                         <SpotInfoAccordeon spot={spot} />
                     </div>
                 </main>
