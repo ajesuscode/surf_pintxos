@@ -15,7 +15,7 @@ export default function AuthForm({ handleSubmit }: AuthFormProps) {
         <div className="">
             <form
                 onSubmit={(e) => handleSubmit(e, email, password)}
-                className="bg-light/50 p-8 rounded-md w-full mt-10 shadow-lg"
+                className="bg-light/50 p-8 rounded-md w-full mt-10 shadow-lg lg:max-w-md lg:mx-auto md:max-w-sm md:mx-auto"
             >
                 <div className="mb-4">
                     <label
