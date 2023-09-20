@@ -40,6 +40,16 @@ export default function Navbar({ user }: { user: User | null }) {
                             </button>
                         </Link>
                     )}
+                    <Link
+                        href="/info
+                    "
+                    >
+                        <div className="flex ml-2 rounded-lg border border-secondary px-2 py-1 opacity-50 ">
+                            <span className="font-display text-xs font-bold text-secondary">
+                                i
+                            </span>
+                        </div>
+                    </Link>
                 </div>
             </div>
         </div>

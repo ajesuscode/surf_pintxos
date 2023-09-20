@@ -30,7 +30,12 @@ export default function SignUp() {
         }
     };
     return (
-        <main>
+        <main className="pt-12">
+            <div className="flex flex-row justify-center items-center">
+                <span className="text-light font-body font-light text-xl">
+                    Register to Surf Pintxos Community
+                </span>
+            </div>
             <AuthForm handleSubmit={handleSubmit} />
             {error && <p>{error}</p>}
         </main>

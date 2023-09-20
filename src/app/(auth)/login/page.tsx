@@ -32,8 +32,8 @@ export default function Login() {
     return (
         <main className="pt-12">
             <div className="flex flex-row justify-center items-center">
-                <span className="text-light font-body font-light text-lg">
-                    Fill the login form
+                <span className="text-light font-body font-light text-xl">
+                    Jump into Surf Pintxos Community
                 </span>
             </div>
             <AuthForm handleSubmit={handleSubmit} />
