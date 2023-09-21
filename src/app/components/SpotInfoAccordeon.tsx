@@ -8,7 +8,6 @@ export default function SpotInfoAccordeon({
 }: {
     spot: PintxoConditions;
 }) {
-    console.log(spot);
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const toggleOpen = (): void => {
@@ -16,17 +15,17 @@ export default function SpotInfoAccordeon({
     };
 
     return (
-        <>
+        <div className="">
             <button
                 onClick={toggleOpen}
-                className="font-body text-secondary bg-light/10 flex p-1 px-2 rounded-sm mx-auto text-sm"
+                className="font-body text-secondary border border-secondary  hover:bg-secondary/25 flex p-1 px-2 rounded-sm text-sm mb-2"
             >
                 Spot Info
             </button>
             <div
-                className={`bg-light/25 w-full transition-all duration-500 ease-in-out ${
+                className={`bg-light/25  transition-all duration-500 ease-in-out ${
                     isOpen
-                        ? "max-h-screen opacity-100 p-4"
+                        ? "flex-grow max-h-screen opacity-100 p-4 "
                         : "max-h-0 opacity-0"
                 }`}
             >
@@ -76,6 +75,6 @@ export default function SpotInfoAccordeon({
                     Windy: <a href={spot.windy || "#"}>Windy Forecast</a>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

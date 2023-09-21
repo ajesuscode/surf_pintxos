@@ -14,7 +14,6 @@ interface PintxoRangeProps {
 export const PintxoRange: React.FC<PintxoRangeProps> = ({
     pintxoCondition,
 }) => {
-    console.log("CONDITION", pintxoCondition);
     const utcDateTime = DateTime.fromISO(pintxoCondition.time, { zone: "utc" });
     const localDateTime = utcDateTime.setZone("Europe/Paris").toFormat("HH:mm");
     const arrowPosition = getArrowPosition(pintxoCondition.condition);

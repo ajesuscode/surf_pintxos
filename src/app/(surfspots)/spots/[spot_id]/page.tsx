@@ -10,6 +10,7 @@ import SpotInfoAccordeon from "@/app/components/SpotInfoAccordeon";
 import { PintxoRange } from "@/app/components/PintxoRange";
 import { getCurrentPintxoConditions } from "@/app/utils/surfUtils";
 import { DateTime } from "luxon";
+import SpotConditionsWeek from "@/app/components/SpotConditionsWeek";
 
 async function getSpotInfo(id: string) {
     const supabase = createServerComponentClient<Database>({ cookies });
@@ -82,8 +83,10 @@ export default async function SpotPage({
                                 />
                             ))}
                         </div>
-
-                        <SpotInfoAccordeon spot={spot} />
+                        <div className="flex flex-col justify-start w-ful gap-4">
+                            <SpotConditionsWeek spot={spot} />
+                            <SpotInfoAccordeon spot={spot} />
+                        </div>
                     </div>
                 </main>
             )}

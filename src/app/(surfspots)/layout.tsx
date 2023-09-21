@@ -24,7 +24,7 @@ export default async function FavoriteSpotsLayout({
     }
 
     return (
-        <main className="p-4 pt-20 xl:p-24">
+        <main className="flex flex-col p-4 pt-20 xl:p-24">
             <div className="flex flex-row justify-between gap-4 mb-4 items-center">
                 <div className="flex flex-row gap-4 justify-start">
                     {user && (
