@@ -67,7 +67,7 @@ export default async function RootLayout({
                 <div>
                     <Navbar user={user} />
                 </div>
-                <main className="h-full">{children}</main>
+                <main className="h-full w-screen">{children}</main>
             </body>
         </html>
     );
