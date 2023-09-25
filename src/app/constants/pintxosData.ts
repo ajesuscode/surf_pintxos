@@ -4,45 +4,58 @@ import { StaticImageData } from "next/image";
 type PintxoItem = {
     color: string;
     title: string;
+    short: string;
     description: string;
     img: StaticImageData;
 };
 
 const pintxosData: PintxoItem[] = [
     {
-        color: "bg-purple-400",
+        color: "bg-gray-400",
         title: "Empty Plate",
-        description: "Flat, no waves. A day for other activities.",
+        short: "Unfavorable Conditions",
+        description:
+            "Conditions are either flat or too stormy for any kind of surfing. Better to stay out of the water.",
         img: pintxo,
     },
     {
         color: "bg-red-400",
         title: "Bread Only",
-        description: "Small waves, suitable for beginners.",
-        img: pintxo,
-    },
-    {
-        color: "bg-orange-400",
-        title: "Gilda",
-        description: "Moderate waves. Good for intermediate surfers.",
+        short: "Tricky Conditions",
+        description:
+            "Waves are present but conditions are tricky due to onshore winds or wrong tide. Suitable for experienced surfers who don't mind the challenge.",
         img: pintxo,
     },
     {
         color: "bg-yellow-400",
-        title: "Txistorra",
-        description: "High waves with strong currents. For the experienced.",
+        title: "Gilda",
+        short: "Average Conditions",
+        description:
+            "Waves are moderate and conditions are surfable but not ideal. Offshore wind may be too strong or the swell direction isn't perfect.",
         img: pintxo,
     },
     {
-        color: "bg-lime-400",
-        title: "Gambas",
-        description: "Perfect conditions. The dream of every surfer.",
+        color: "bg-orange-400",
+        title: "Txistorra",
+        short: "Good Conditions",
+        description:
+            "Good wave height and favorable wind and tide conditions. Suitable for most surfers.",
         img: pintxo,
     },
     {
         color: "bg-green-400",
+        title: "Gambas",
+        short: "Great Conditions",
+        description:
+            "Waves are firing with light offshore winds and the tide is just right. A great day for all surfers.",
+        img: pintxo,
+    },
+    {
+        color: "bg-blue-400",
         title: "Txuleta Feast",
-        description: "Extreme conditions. Only for the pros.",
+        short: "Epic Conditions",
+        description:
+            "Perfect alignment of swell, wind, and tide. These are the days you'll remember. Only for those who know how to handle such conditions.",
         img: pintxo,
     },
 ];

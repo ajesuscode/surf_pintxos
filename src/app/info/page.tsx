@@ -41,6 +41,9 @@ const Info = () => {
                                 {item.title}
                             </h3>
                             <p className="font-body text-dark font-normal">
+                                {item.short}
+                            </p>
+                            <p className="font-body text-dark font-normal">
                                 {item.description}
                             </p>
                         </div>

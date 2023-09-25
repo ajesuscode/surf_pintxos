@@ -20,7 +20,7 @@ export const PintxoRange: React.FC<PintxoRangeProps> = ({
     const arrowColor = getArrowColor(pintxoCondition.condition);
 
     return (
-        <div className="flex flex-col gap-2 justify-center items-center mb-4">
+        <div className="flex flex-col gap-2 justify-center items-center">
             <div className="relative w-6 h-16 rounded-sm gradient-div opacity-70">
                 <div
                     className={`absolute left-[-25%] w-9 h-1 ${arrowColor} rounded-sm`}
