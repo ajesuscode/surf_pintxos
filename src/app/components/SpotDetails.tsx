@@ -22,7 +22,7 @@ type PintxoName =
     | "Txuleta Feast";
 
 // Render pintxo color based on a name from condition
-function getPintxoColor(condition: PintxoName): string {
+function getPintxoColor(condition: string): string {
     switch (condition) {
         case "Empty Plate":
             console.log("condition", condition);
@@ -59,7 +59,7 @@ export default async function SpotDetails({
     const currentPintxoCondition = getCurrentPintxoConditions(
         spot,
         currentTime,
-        5
+        3
     );
 
     return (
@@ -69,13 +69,22 @@ export default async function SpotDetails({
                     <span className="text-light font-body font-regular text-xl">
                         {spot?.name?.slice(0, 21) ?? ""}
                     </span>
-                    <div className="flex flex-row gap-4 justify-start  items-start ml-2 lg:m-0">
+                    <div className="flex flex-row gap-4 justify-start  items-start ml-2 lg:m-0 align-middle pb-4">
                         {currentPintxoCondition.map((condition, index) => (
                             <PintxoRange
                                 key={index}
                                 pintxoCondition={condition}
                             />
                         ))}
+                        <div
+                            className={`ml-4 flex w-full h-20 justify-center items-center mx-auto rounded-sm ${getPintxoColor(
+                                currentPintxoCondition[0].condition
+                            )} opacity-80 hover:opacity-100`}
+                        >
+                            <div className="font-display text-dark">
+                                {currentPintxoCondition[0].condition}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
