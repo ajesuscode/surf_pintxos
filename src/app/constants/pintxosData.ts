@@ -11,7 +11,7 @@ type PintxoItem = {
 
 const pintxosData: PintxoItem[] = [
     {
-        color: "bg-gray-400",
+        color: "bg-purple-400",
         title: "Empty Plate",
         short: "Unfavorable Conditions",
         description:
