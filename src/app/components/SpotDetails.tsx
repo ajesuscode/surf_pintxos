@@ -12,6 +12,8 @@ import { Database } from "../lib/database.types";
 import { WaveHeightIcon, WindIcon } from "./icons/icons";
 import { PintxoRange } from "./PintxoRange";
 import { getCurrentPintxoConditions } from "../utils/surfUtils";
+import { getPintxoColor } from "../utils/uiUtils";
+import PintxoConditionNameCard from "./atom/PintxoConditionNameCard";
 type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
 type PintxoName =
     | "Empty Plate"
@@ -22,25 +24,6 @@ type PintxoName =
     | "Txuleta Feast";
 
 // Render pintxo color based on a name from condition
-function getPintxoColor(condition: string): string {
-    switch (condition) {
-        case "Empty Plate":
-            console.log("condition", condition);
-            return "bg-purple-400";
-        case "Bread Only":
-            return "bg-red-400";
-        case "Gilda":
-            return "bg-orange-400";
-        case "Txistorra":
-            return "bg-yellow-400";
-        case "Gambas":
-            return "bg-lime-400";
-        case "Txuleta Feast":
-            return "bg-green-400";
-        default:
-            return "bg-gray-400";
-    }
-}
 
 export default async function SpotDetails({
     spot,
@@ -76,15 +59,9 @@ export default async function SpotDetails({
                                 pintxoCondition={condition}
                             />
                         ))}
-                        <div
-                            className={`ml-4 flex w-full h-20 justify-center items-center mx-auto rounded-sm ${getPintxoColor(
-                                currentPintxoCondition[0].condition
-                            )} opacity-80 hover:opacity-100`}
-                        >
-                            <div className="font-display text-dark">
-                                {currentPintxoCondition[0].condition}
-                            </div>
-                        </div>
+                        <PintxoConditionNameCard
+                            currentPintxoCondition={currentPintxoCondition}
+                        />
                     </div>
                 </div>
 
