@@ -23,9 +23,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 .from("fav_spots")
                 .delete()
                 .eq("spot_id", favorite.spot_id);
-            console.log(
-                "DELETEDDDDDDDD //////////////////////////////////////////////////////////////"
-            );
             return NextResponse.json({ error, status: "200" });
         } else {
             const { data, error } = await supabase
@@ -37,8 +34,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 })
                 .select()
                 .single();
-            console.log("Spot added", data);
-            console.log("EROOORRRR", error);
             return NextResponse.json({ data, error });
         }
     } catch (error) {

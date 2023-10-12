@@ -1,6 +1,9 @@
 import { HourlySurfData } from "@/app/constants/types";
 import NotFound from "@/app/not-found";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import {
+    User,
+    createServerComponentClient,
+} from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import type { Database } from "@/app/lib/database.types";
 import Link from "next/link";
@@ -11,6 +14,12 @@ import { PintxoRange } from "@/app/components/PintxoRange";
 import { getCurrentPintxoConditions } from "@/app/utils/surfUtils";
 import { DateTime } from "luxon";
 import SpotConditionsWeek from "@/app/components/SpotConditionsWeek";
+
+async function getUser(): Promise<User | null> {
+    const supabase = createServerComponentClient<Database>({ cookies });
+    const { data: user } = await supabase.auth.getUser();
+    return user ? user.user : null;
+}
 
 async function getSpotInfo(id: string) {
     const supabase = createServerComponentClient<Database>({ cookies });
@@ -42,6 +51,7 @@ export default async function SpotPage({
     params: { spot_id: string };
 }) {
     const id = params.spot_id;
+    const user = await getUser();
     const spot = await getSpotInfo(id);
     const favorite = await isSpotFavorite(id);
     const isFavorite = !!favorite;
@@ -73,6 +83,7 @@ export default async function SpotPage({
                             <AddToFavoriteBtn
                                 spotId={id}
                                 isFavorite={isFavorite}
+                                user={user}
                             />
                         </div>
                         <div className="flex flex-row gap-6 justify-start  items-center ml-2 lg:m-0 overflow-y-auto mt-4">
