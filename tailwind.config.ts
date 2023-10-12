@@ -18,6 +18,7 @@ const config: Config = {
                 secondary: "#84cc16",
                 light: "#c7d2fe",
                 dark: "#1e1b4b",
+                primeshade: "#383593",
             },
         },
     },

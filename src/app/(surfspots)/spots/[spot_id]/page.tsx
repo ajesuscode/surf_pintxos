@@ -70,13 +70,13 @@ export default async function SpotPage({
         <>
             {spot && (
                 <main>
-                    <div className="flex flex-row justify-start gap-4 items-center mb-4">
+                    <div className="flex flex-row justify-start gap-4 items-center mb-4 px-4">
                         <Link href="/spots">
                             <ArrowBackIcon size={18} color="text-dark" />
                         </Link>
                     </div>
                     <div className="flex flex-col justify-center px-4 gap-2 bg-dark/25 p-2 rounded-sm">
-                        <div className="flex flex-row justify-between items-center ">
+                        <div className="flex flex-row justify-between items-center py-4">
                             <div className="font-body text-light text-2xl">
                                 {spot.name}
                             </div>
@@ -86,7 +86,7 @@ export default async function SpotPage({
                                 user={user}
                             />
                         </div>
-                        <div className="flex flex-row gap-6 justify-start  items-center ml-2 lg:m-0 overflow-y-auto mt-4">
+                        <div className="flex flex-row gap-6 justify-start  items-center ml-2 lg:m-0 overflow-y-auto my-4">
                             {currentPintxoCondition.map((pintxo, index) => (
                                 <PintxoRange
                                     key={index}

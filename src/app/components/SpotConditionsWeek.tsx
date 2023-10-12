@@ -35,10 +35,7 @@ export default function SpotConditionsWeek({
             <table className="table-auto border-separate border-spacing-2 items-center">
                 <tbody className="">
                     <tr>
-                        <th
-                            className=" bg-light/5 w-48"
-                            style={{ position: "sticky" }}
-                        ></th>
+                        <th className="bg-primeshade w-48 sticky left-0"></th>
                         {localDateTimes?.map((item, index) => (
                             <td
                                 key={index}
@@ -53,7 +50,7 @@ export default function SpotConditionsWeek({
                         )) ?? <></>}
                     </tr>
                     <tr>
-                        <th className=" text-xs text-light font-body font-light sticky bg-light/5 p-2">
+                        <th className=" text-xs text-light font-body font-light  bg-primeshade p-2 sticky left-0">
                             Wave (m)
                         </th>
                         {spot.hourlyspotforecast?.hourly.wave_height
@@ -68,7 +65,7 @@ export default function SpotConditionsWeek({
                             ))}
                     </tr>
                     <tr>
-                        <th className="text-xs text-light font-body font-light bg-light/5 p-2 sticky">
+                        <th className="text-xs text-light font-body font-light bg-primeshade p-2 sticky left-0">
                             Period
                         </th>
                         {spot.hourlyspotforecast?.hourly.wave_period
@@ -83,7 +80,7 @@ export default function SpotConditionsWeek({
                             ))}
                     </tr>
                     <tr>
-                        <th className="text-xs text-light font-body font-light bg-light/5 p-2 sticky">
+                        <th className="text-xs text-light font-body font-light bg-primeshade p-2 sticky left-0">
                             Wave dir.
                         </th>
                         {spot.hourlyspotforecast?.hourly.wave_direction
@@ -99,7 +96,7 @@ export default function SpotConditionsWeek({
                     </tr>
 
                     <tr>
-                        <th className="text-xs text-light font-body font-light bg-light/5 p-2 sticky">
+                        <th className="text-xs text-light font-body font-light bg-primeshade p-2 sticky left-0">
                             Wind (km/h)
                         </th>
                         {spot.hourlyweatherdata?.windspeed_10m
@@ -114,7 +111,7 @@ export default function SpotConditionsWeek({
                             )) ?? <></>}
                     </tr>
                     <tr>
-                        <th className="text-xs text-light font-body font-light bg-light/5 p-2 sticky">
+                        <th className="text-xs text-light font-body font-light bg-primeshade p-2 sticky left-0">
                             Wind dir.
                         </th>
                         {spot.hourlyweatherdata?.winddirection_10m
@@ -129,7 +126,7 @@ export default function SpotConditionsWeek({
                             ))}
                     </tr>
                     <tr>
-                        <th className="text-xs text-light font-body font-light bg-light/5 p-2 sticky">
+                        <th className="text-xs text-light font-body font-light bg-primeshade p-2 sticky left-0">
                             Temp. (°C)
                         </th>
                         {spot.hourlyweatherdata?.temperature_2m
