@@ -16,7 +16,7 @@ export default function SpotInfo({ spot }: { spot: PintxoConditions }) {
                     Best Surf: {spot.best_surf || "N/A"}
                 </div>
                 <div className=" border-1 border border-light/25 rounded-sm p-4">
-                    Board: {spot.board || "N/A"}
+                    Board: {typeof spot.board === "string" ? spot.board : "N/A"}
                 </div>
                 <div className=" border-1 border border-light/25 rounded-sm p-4">
                     Surfer: {spot.surfer || "N/A"}
