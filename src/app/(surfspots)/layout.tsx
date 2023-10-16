@@ -24,8 +24,8 @@ export default async function FavoriteSpotsLayout({
     }
 
     return (
-        <main className="flex flex-col p-4 pt-20 xl:p-24">
-            <div className="flex flex-row justify-between gap-4 mb-4 items-center sticky top-14 bg-primary h-full z-20 pt-4 w-full">
+        <main className="flex flex-col p-4 pt-16 xl:p-20 h-full">
+            <div className="flex flex-row justify-between gap-4 items-center sticky top-14 bg-primary py-4 z-20 w-full">
                 <div className="flex flex-row gap-4 justify-start ">
                     {user && (
                         <Link href="/favorite">
@@ -51,7 +51,7 @@ export default async function FavoriteSpotsLayout({
                     </Link>
                 </div>
 
-                <div className="flex flex-row gap-0 justify-start items-center bg-dark/50 rounded-sm p-1">
+                <div className="flex flex-row gap-0 justify-start items-center bg-dark/50 rounded-sm p-2">
                     {currentTide?.tide === "rising" ? (
                         <RisingTideIcon size={20} color="text-light/50" />
                     ) : (

@@ -9,7 +9,7 @@ import type { Database } from "@/app/lib/database.types";
 import Link from "next/link";
 import { AddFavoriteIcon, ArrowBackIcon } from "@/app/components/icons/icons";
 import AddToFavoriteBtn from "@/app/components/AddToFavoriteBtn";
-import SpotInfoAccordeon from "@/app/components/SpotInfoAccordeon";
+import SpotInfo from "@/app/components/SpotInfo";
 import { PintxoRange } from "@/app/components/PintxoRange";
 import { getCurrentPintxoConditions } from "@/app/utils/surfUtils";
 import { DateTime } from "luxon";
@@ -69,14 +69,9 @@ export default async function SpotPage({
     return (
         <>
             {spot && (
-                <main>
-                    <div className="flex flex-row justify-start gap-4 items-center mb-4 px-4">
-                        <Link href="/spots">
-                            <ArrowBackIcon size={18} color="text-dark" />
-                        </Link>
-                    </div>
-                    <div className="flex flex-col justify-center px-4 gap-2 bg-dark/25 p-2 rounded-sm">
-                        <div className="flex flex-row justify-between items-center py-4">
+                <>
+                    <div className="flex flex-col justify-start px-4 gap-2 bg-dark/25 rounded-sm md:px-8 md:py-4 p-4 h-full">
+                        <div className="flex flex-row justify-between items-center md:mb-2">
                             <div className="font-body text-light text-2xl">
                                 {spot.name}
                             </div>
@@ -86,7 +81,7 @@ export default async function SpotPage({
                                 user={user}
                             />
                         </div>
-                        <div className="flex flex-row gap-6 justify-start  items-center ml-2 lg:m-0 overflow-y-auto my-4">
+                        <div className="flex flex-row gap-6 justify-start  items-center lg:m-0 overflow-y-auto my-4">
                             {currentPintxoCondition.map((pintxo, index) => (
                                 <PintxoRange
                                     key={index}
@@ -94,12 +89,20 @@ export default async function SpotPage({
                                 />
                             ))}
                         </div>
-                        <div className="flex flex-col justify-start w-ful gap-4">
-                            <SpotConditionsWeek spot={spot} />
-                            <SpotInfoAccordeon spot={spot} />
-                        </div>
                     </div>
-                </main>
+                    <div className="font-body text-secondary p-1 rounded-sm text-xs mt-2">
+                        Detailed Weekly Conditions
+                    </div>
+                    <div className="bg-dark/25 p-2">
+                        <SpotConditionsWeek spot={spot} />
+                    </div>
+                    <div className="font-body text-secondary p-1 rounded-sm text-xs mt-2">
+                        Spot Info
+                    </div>
+                    <div className="bg-dark/25 p-2 mb-4">
+                        <SpotInfo spot={spot} />
+                    </div>
+                </>
             )}
         </>
     );

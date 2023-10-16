@@ -39,7 +39,7 @@ export default function SpotConditionsWeek({
                         {localDateTimes?.map((item, index) => (
                             <td
                                 key={index}
-                                className="border border-light/5 text-xs p-1 text-light/50 font-body"
+                                className="border border-light/5 text-xs text-light/50 font-body text-center bg-primeshade"
                             >
                                 {item.split(" ")[0]}
                                 <br />
