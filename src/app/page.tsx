@@ -18,7 +18,7 @@ export default async function Home() {
         <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-2">
             <Image
                 src={pintxos_lg}
-                width={180}
+                width={150}
                 alt="surf_pintxos_logo"
                 quality={100}
             />
@@ -29,7 +29,7 @@ export default async function Home() {
                 Surf forecast for all Pays Basque spots
             </p>
             <Link href="/spots">
-                <button className="w-72 p-4 rounded-md bg-secondary text-primary hover:bg-light hover:text-dark">
+                <button className="w-72 p-4 rounded-md bg-secondary text-primary hover:bg-light hover:text-dark font-body">
                     Check Pintxos
                 </button>
             </Link>
