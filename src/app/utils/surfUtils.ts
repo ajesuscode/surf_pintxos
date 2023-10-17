@@ -11,9 +11,13 @@ import {
     TideType,
     HourlyWeatherData,
     ForecastDataResponse,
+    Pintxo,
 } from "../constants/types";
 import { Database } from "../lib/database.types";
 type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
+type WeekdayPintxoCondition = {
+    [weekday: string]: string;
+};
 
 //constants
 const directionToDegrees: { [key: string]: number } = {
@@ -249,4 +253,43 @@ export function getCurrentPintxoConditions(
     }
 
     return currentPintxoCondition;
+}
+
+export function getWeekdayPintxoCondition(
+    data: Pintxo[]
+): WeekdayPintxoCondition {
+    const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const weekdayConditions: {
+        [weekday: string]: { [condition: string]: number };
+    } = {};
+    console.log("data", data);
+
+    for (const item of data) {
+        const date = DateTime.fromISO(item.time, { zone: "UTC" })
+            .setZone("Europe/Paris")
+            .startOf("hour");
+        const weekday = weekdays[date.weekday - 1];
+
+        weekdayConditions[weekday] = weekdayConditions[weekday] || {};
+        weekdayConditions[weekday][item.condition] =
+            (weekdayConditions[weekday][item.condition] || 0) + 1;
+    }
+
+    const averageConditions: WeekdayPintxoCondition = {};
+
+    for (const weekday in weekdayConditions) {
+        let maxCount = 0;
+        let mostFrequentCondition = "";
+
+        for (const condition in weekdayConditions[weekday]) {
+            if (weekdayConditions[weekday][condition] > maxCount) {
+                maxCount = weekdayConditions[weekday][condition];
+                mostFrequentCondition = condition;
+            }
+        }
+
+        averageConditions[weekday] = mostFrequentCondition;
+    }
+
+    return averageConditions;
 }

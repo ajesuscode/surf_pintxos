@@ -14,6 +14,7 @@ import { PintxoRange } from "./PintxoRange";
 import { getCurrentPintxoConditions } from "../utils/surfUtils";
 import { getPintxoColor } from "../utils/uiUtils";
 import PintxoConditionNameCard from "./atom/PintxoConditionNameCard";
+import WeekdayPintxoCondition from "./atom/WeekdayPintxoCondition";
 type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
 type PintxoName =
     | "Empty Plate"
@@ -65,27 +66,28 @@ export default async function SpotDetails({
                     </div>
                 </div>
 
-                <div className="flex flex-row justify-between gap-2">
-                    <div className="flex flex-row gap-4  justify-start items-center bg-light/5 p-2 rounded-sm">
+                <div className="flex flex-row justify-between items-center ">
+                    <div className="flex flex-row gap-2 justify-start items-center bg-light/5 p-2 rounded-sm">
                         <WaveHeightIcon size={20} color="text-light" />
                         <span className="text-light font-body font-medium text-lg">
                             {getCurrentWaveHeightForSpot(spot) || null} {"m"}
                         </span>
                     </div>
-                    <div className="flex flex-row gap-4  justify-start items-center bg-light/5 p-2 rounded-sm">
+                    <div className="flex flex-row gap-2  justify-start items-center bg-light/5 p-2 rounded-sm">
                         <span className="text-light font-body font-light text-lg">
                             {getCurrentPeriodForSpot(spot) || null}{" "}
                             <span className="text-xs">s.</span>
                         </span>
                     </div>
-                    <div className="flex flex-row gap-4 items-center  justify-start bg-light/5 p-2 rounded-sm">
+                    <div className="flex flex-row gap-2 items-center  justify-start bg-light/5 p-2 rounded-sm">
                         <WindIcon size={20} color="text-light/50" />
-                        <span className="text-light font-body text-sm font-thin">
+                        <span className="text-light font-body text-lg font-thin">
                             {getCurrentWind(spot) || null}
                         </span>
                     </div>
                 </div>
             </div>
+            <WeekdayPintxoCondition pintxo={spot.pintxo} />
         </div>
     );
 }

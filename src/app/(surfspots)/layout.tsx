@@ -46,7 +46,7 @@ export default async function FavoriteSpotsLayout({
                                     
                             `}
                         >
-                            All Pintxoss
+                            All Pintxos
                         </div>
                     </Link>
                 </div>

@@ -47,23 +47,6 @@ async function getFavoriteSpots(): Promise<PintxoConditions[]> {
 
 export default async function FavoriteSpots() {
     const favoriteSpotsData = await getFavoriteSpots();
-    // let favoriteSpotsData: PintxoConditions[] = [];
-
-    // if (favoriteSpots.length) {
-    //     favoriteSpotsData = await Promise.all(
-    //         favoriteSpots.map(async (spot) => {
-    //             try {
-    //                 return await fetchSpotSurfData(spot);
-    //             } catch (error) {
-    //                 console.error(
-    //                     `Error fetching data for spot ${spot.name}:`,
-    //                     error
-    //                 );
-    //                 return null; // or return a default value or error object
-    //             }
-    //         })
-    //     );
-    // }
 
     return (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 md:grid-cols-2 ">
