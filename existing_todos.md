@@ -1,2 +1,2 @@
-- [ ] src/app/info/page.tsx:5://TODO Add more description, refactor ui  
+- [ ] src/app/info/page.tsx:6://TODO Add more description, refactor ui  
 - [ ] src/app/components/SpotConditionsWeek.tsx:31:    //TODO make side column sticky
