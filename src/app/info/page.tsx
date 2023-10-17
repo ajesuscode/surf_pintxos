@@ -5,47 +5,51 @@ import Image from "next/image";
 //TODO Add more description, refactor ui
 const Info = () => {
     return (
-        <div className="text-light rounded-lg shadow-lg relative overflow-hidden p-20 h-full">
+        <div className="text-light rounded-lg shadow-lg relative overflow-hidden lg:p-20 h-full px-4 pt-20">
             <h1 className="text-4xl md:text-6xl mb-4 text-purple-400 font-display">
                 What is Surf Pintxos?
             </h1>
-            <p className="text-lg md:text-xl mb-10 text-red-400  font-normal font-body">
-                Surf Pintxos is your community-driven digital surf bar, serving
-                up wave conditions on a skewer. Pick your pintxo, ride your
-                wave, and share the stoke!
+            <p className="text-md md:text-xl mb-10 text-red-400  font-normal font-body">
+                Surf Pintxos is a community-driven digital surf forecast bar,
+                serving up wave conditions on a skewer for all Basque Country
+                spots. Pick your pintxo, ride your wave, and share the stoke!
             </p>
 
             <h2 className="text-2xl md:text-4xl mb-4 text-orange-400 font-display">
                 Surf Pintxos Guide
             </h2>
-            <p className="text-lg md:text-xl mb-4 text-gray-300 font-normal font-body">
-                Choose a spot, check the pintxos, and hit the surf. Share your
-                experience and keep the community vibe alive. Its that simple!
+            <p className="text-md md:text-xl mb-4 text-gray-300 font-normal font-body">
+                There are six surf conditions with corresponding pintxo name and
+                brand color. You can learn them below.
             </p>
 
             {/* Grid for list items */}
-            <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full my-8">
                 {pintxosData.map((item, index) => (
                     <div
-                        className={`${item.color} relative rounded-lg overflow-hidden flex self-center justify-center items-center opacity-80`}
+                        className={`${item.color} rounded-lg overflow-hidden flex flex-row self-center justify-between opacity-80 h-full`}
                         key={index}
                     >
-                        <Image
-                            src={item.img}
-                            alt={item.title}
-                            height={300}
-                            className="object-cover opacity-50"
-                        />
-                        <div className="absolute inset-y-40 p-4">
-                            <h3 className="text-xl font-bold font-body text-dark">
+                        <div className="h-full">
+                            <Image
+                                src={item.img}
+                                alt={item.title}
+                                width={150}
+                                height={150}
+                                style={{ objectFit: "contain" }}
+                                className="opacity-50 object-center p-8"
+                            />
+                        </div>
+                        <div className="flex flex-col justify-start items-start gap-2 flex-grow w-3/4 pr-4">
+                            <div className="text-dark font-bold text-lg font-body pt-4">
                                 {item.title}
-                            </h3>
-                            <p className="font-body text-dark font-normal">
+                            </div>
+                            <div className="text-dark text-sm font-body">
                                 {item.short}
-                            </p>
-                            <p className="font-body text-dark font-normal">
+                            </div>
+                            <div className="text-dark text-xs font-body flex-wrap font-light">
                                 {item.description}
-                            </p>
+                            </div>
                         </div>
                     </div>
                 ))}
