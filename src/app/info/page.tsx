@@ -1,6 +1,7 @@
 import React from "react";
-import pintxosData from "@/app/constants/pintxosData"; // Adjust the import path as needed
+import pintxosData from "@/app/constants/pintxosData";
 import Image from "next/image";
+import Link from "next/link";
 
 //TODO Add more description, refactor ui
 const Info = () => {
@@ -53,6 +54,13 @@ const Info = () => {
                         </div>
                     </div>
                 ))}
+            </div>
+            <div className="mx-auto mb-8 lg:flex lg:justify-center lg:items-center md:mt-8">
+                <Link href="/spots">
+                    <button className=" p-4 rounded-md bg-secondary text-primary hover:bg-light hover:text-dark font-body w-full md:px-12">
+                        Go to Pintxos
+                    </button>
+                </Link>
             </div>
         </div>
     );
