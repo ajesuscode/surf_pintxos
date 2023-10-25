@@ -3,7 +3,6 @@ import pintxosData from "@/app/constants/pintxosData";
 import Image from "next/image";
 import Link from "next/link";
 
-//TODO Add more description, refactor ui
 const Info = () => {
     return (
         <div className="text-light rounded-lg shadow-lg relative overflow-hidden lg:p-20 h-full px-4 pt-20">
@@ -24,7 +23,6 @@ const Info = () => {
                 brand color. You can learn them below.
             </p>
 
-            {/* Grid for list items */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full my-8">
                 {pintxosData.map((item, index) => (
                     <div
@@ -55,7 +53,7 @@ const Info = () => {
                     </div>
                 ))}
             </div>
-            <div className="mx-auto mb-8 lg:flex lg:justify-center lg:items-center md:mt-8">
+            <div className="mx-auto mb-8 lg:flex lg:justify-center lg:items-center md:mt-20">
                 <Link href="/spots">
                     <button className=" p-4 rounded-md bg-secondary text-primary hover:bg-light hover:text-dark font-body w-full md:px-12">
                         Go to Pintxos

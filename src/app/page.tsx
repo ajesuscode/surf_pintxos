@@ -33,6 +33,12 @@ export default async function Home() {
                     Check Pintxos
                 </button>
             </Link>
+            <span className="text-light font-body">or</span>
+            <Link href="/info">
+                <button className="w-72 p-4 rounded-md border border-light text-secondary hover:bg-dark hover:text-light font-body">
+                    Pintxos Guide
+                </button>
+            </Link>
         </main>
     );
 }

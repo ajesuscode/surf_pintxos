@@ -28,8 +28,6 @@ export default function SpotConditionsWeek({
         return locTime.setZone("Europe/Paris").toFormat("ccc d HH:mm");
     });
 
-    //TODO make side column sticky
-
     return (
         <div className="overflow-y-auto">
             <table className="table-auto border-separate border-spacing-2 items-center">
