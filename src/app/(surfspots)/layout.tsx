@@ -6,7 +6,8 @@ import Link from "next/link";
 
 //utils
 import { getTidesData, getCurrentTide } from "../utils/surfUtils";
-import { FallinTideIcon, RisingTideIcon } from "../components/icons/icons";
+import CurrentTide from "../components/atom/CurrentTide";
+
 export default async function FavoriteSpotsLayout({
     children,
 }: {
@@ -50,20 +51,7 @@ export default async function FavoriteSpotsLayout({
                         </div>
                     </Link>
                 </div>
-
-                <div className="flex flex-row gap-0 justify-start items-center bg-dark/50 rounded-sm p-2">
-                    {currentTide?.tide === "rising" ? (
-                        <RisingTideIcon size={20} color="text-light/50" />
-                    ) : (
-                        <FallinTideIcon size={20} color="text-light/50" />
-                    )}
-                    <span className="text-light/50 font-body text-sm pr-2">
-                        {currentTide?.tide || null}
-                    </span>
-                    <span className="text-light/50 font-body text-sm">
-                        {currentTide?.time || null}
-                    </span>
-                </div>
+                <CurrentTide currentTide={currentTide} />
             </div>
             {children}
         </main>
