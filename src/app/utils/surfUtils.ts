@@ -258,11 +258,10 @@ export function getCurrentPintxoConditions(
 export function getWeekdayPintxoCondition(
     data: Pintxo[]
 ): WeekdayPintxoCondition {
-    const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     const weekdayConditions: {
         [weekday: string]: { [condition: string]: number };
     } = {};
-    console.log("data", data);
 
     for (const item of data) {
         const date = DateTime.fromISO(item.time, { zone: "UTC" })
