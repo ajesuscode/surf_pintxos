@@ -14,6 +14,7 @@ import { PintxoRange } from "@/app/components/PintxoRange";
 import { getCurrentPintxoConditions } from "@/app/utils/surfUtils";
 import { DateTime } from "luxon";
 import SpotConditionsWeek from "@/app/components/SpotConditionsWeek";
+import TideContainer from "@/app/components/atom/TideContainer";
 
 async function getUser(): Promise<User | null> {
     const supabase = createServerComponentClient<Database>({ cookies });
@@ -90,6 +91,10 @@ export default async function SpotPage({
                             ))}
                         </div>
                     </div>
+                    <div className="font-body text-secondary p-1 rounded-sm text-xs mt-2">
+                        Tide
+                    </div>
+                    <TideContainer />
                     <div className="font-body text-secondary p-1 rounded-sm text-xs mt-2">
                         Detailed Weekly Conditions
                     </div>
