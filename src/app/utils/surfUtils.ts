@@ -3,16 +3,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { DateTime } from "luxon";
 //types
-import {
-    FullSpot,
-    SurfSpot,
-    HourlySurfData,
-    FavoriteSpot,
-    TideType,
-    HourlyWeatherData,
-    ForecastDataResponse,
-    Pintxo,
-} from "../constants/types";
+import { TideType, Pintxo } from "../constants/types";
 import { Database } from "../lib/database.types";
 type PintxoConditions = Database["public"]["Tables"]["spot_conditions"]["Row"];
 type WeekdayPintxoCondition = {
@@ -56,30 +47,6 @@ function getAverageDirection(direction: string): number {
     if (avgDirection < 0) avgDirection += 360;
 
     return avgDirection;
-}
-
-export async function fetchSpotSurfData(spot: SurfSpot) {
-    const marineApiUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${spot.lat}&longitude=${spot.long}&hourly=wave_height,wave_direction,wave_period,swell_wave_height,swell_wave_direction,swell_wave_period`;
-    const forecastApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${spot.lat}&longitude=${spot.long}&hourly=temperature_2m,precipitation,visibility,windspeed_10m,winddirection_10m,temperature_80m,uv_index&models=best_match`;
-
-    const [marineResponse, forecastResponse] = await Promise.all([
-        fetch(marineApiUrl),
-        fetch(forecastApiUrl),
-    ]);
-
-    if (!marineResponse.ok) {
-        throw new Error(`Failed to fetch data for spot ${spot.name}`);
-    }
-
-    const hourlySurfData: HourlySurfData = await marineResponse.json();
-    const forecastData: ForecastDataResponse = await forecastResponse.json();
-    const hourlyWeatherData: HourlyWeatherData = forecastData.hourly;
-
-    return {
-        ...spot,
-        hourlySpotForecast: hourlySurfData,
-        hourlyWeatherData: hourlyWeatherData,
-    };
 }
 
 export function getCurrentWaveHeightForSpot(

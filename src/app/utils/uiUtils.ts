@@ -1,7 +1,6 @@
 export function getPintxoColor(condition: string): string {
     switch (condition) {
         case "Empty Plate":
-            console.log("condition", condition);
             return "bg-purple-400";
         case "Bread Only":
             return "bg-red-400";
