@@ -2,7 +2,6 @@ import React from "react";
 import pintxosData from "@/app/constants/pintxosData";
 import Image from "next/image";
 import Link from "next/link";
-import TideContainer from "../components/atom/TideContainer";
 
 const Info = () => {
     return (
@@ -23,7 +22,6 @@ const Info = () => {
                 There are six surf conditions with corresponding pintxo name and
                 brand color. You can learn them below.
             </p>
-            <TideContainer />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full my-8">
                 {pintxosData.map((item, index) => (
